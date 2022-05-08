@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#__next {
+    @apply p-0 m-0 min-w-full w-full min-h-screen max-w-full overflow-hidden;
+}
+
+#__next {
+    @apply flex flex-col overflow-hidden;
+}
+
+* {
+    @apply text-sm text-black;
+}
+
+button {
+    @apply active:bg-gray-200 bg-transparent min-w-max rounded-lg disabled:opacity-50 disabled:bg-transparent;
+}
+
+h1 {
+    @apply text-4xl;
+}
+
+h2 {
+    @apply text-2xl;
+}
+
+h3 {
+    @apply text-lg;
+}
+
+h4 {
+    @apply text-lg;
+}
+
+.vertical-timeline-element-content {
+    @apply shadow !important;
+}
+
+.vertical-timeline-element-icon {
+    @apply shadow-none !important;
+}
+
+.vertical-timeline::before {
+    @apply bg-black rounded-full !important;
+}
