@@ -12,6 +12,6 @@ To test and play the game locally on your device, perform the following steps:
 
 1. Clone this repo
 2. Open a terminal
-3. Navigate into `app`folder
+3. Navigate into `app` folder
 4. Execute `yarn && yarn build`
 5. Execute `yarn start`
