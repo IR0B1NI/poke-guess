@@ -6,7 +6,7 @@ This is a small NextJS App that uses the [pokedex-promise-v2](https://github.com
 
 ## Testing
 
-To play the game online open this [LINK]()
+To play the game online open this [LINK](https://pokemon.robin-thoene.com/)
 
 To test and play the game locally on your device, perform the following steps:
 
