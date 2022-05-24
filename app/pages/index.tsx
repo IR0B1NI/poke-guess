@@ -330,27 +330,29 @@ const Home: NextPage = () => {
                                 ))}
                             <div>{isBusy && 'Loading ...'}</div>
                         </div>
-                        <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2">
-                            <div className="flex flex-col max-w-max overflow-y-auto overflow-x-hidden">
-                                <div className="min-h-content p-3">
-                                    {pokemonToFind.map((p, i) => (
-                                        <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="flex flex-1 justify-center items-start mt-16">
-                                {lastGuessedPokemon && (
-                                    <div className="flex flex-col justify-center items-center ">
-                                        <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
-                                        <Image
-                                            height={320}
-                                            width={320}
-                                            alt=""
-                                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
-                                        />
-                                        <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                        <div className="flex flex-1 relative overflow-hidden">
+                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2 overflow-y-auto z-10">
+                                <div className="flex flex-col max-w-max">
+                                    <div className="min-h-content p-3">
+                                        {pokemonToFind.map((p, i) => (
+                                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
+                                        ))}
                                     </div>
-                                )}
+                                </div>
+                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-0">
+                                    {lastGuessedPokemon && (
+                                        <div className="flex flex-col justify-center items-center bg-gray-200 rounded-lg shadow-sm p-4">
+                                            <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
+                                            <Image
+                                                height={320}
+                                                width={320}
+                                                alt=""
+                                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
+                                            />
+                                            <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
