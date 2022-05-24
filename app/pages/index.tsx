@@ -9,6 +9,7 @@ import { CheckBox } from '../components/CheckBox';
 import { IPokemonGameSave } from '../types/IPokemonGameSave';
 import Image from 'next/image';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
+import { IPokemonApiCache } from '../types/IPokemonApiCache';
 
 /**
  * The page component to render at "/".
@@ -36,6 +37,23 @@ const Home: NextPage = () => {
     const abortController = useRef<AbortController>();
     /** The name of the key in the local storage to store the current progress. */
     const saveStoreKey = 'PokemonGameSave';
+    /** The name of the key in the local storage to store the poke api data cache.*/
+    const pokeApiDataCacheKey = 'PokeApiData';
+
+    /**
+     * Get the poke api data cache model from local storage.
+     *
+     * @returns {IPokemonApiCache | undefined} The cached poke api data if any exists.
+     */
+    const getPokeApiDataFromCache = (): IPokemonApiCache | undefined => {
+        // Try to retrieve cached poke api date.
+        const cachedPokeApiDataString = localStorage.getItem(pokeApiDataCacheKey);
+        if (!cachedPokeApiDataString) {
+            return;
+        }
+        const cachedPokeApiData = JSON.parse(cachedPokeApiDataString) as IPokemonApiCache;
+        return cachedPokeApiData;
+    };
 
     /**
      * Fetch the list of available pokemon generations.
@@ -43,7 +61,7 @@ const Home: NextPage = () => {
      * @returns {Promise<IPokemonGeneration[]>} The list of available pokemon generations.
      */
     const fetchPokemonGenerations = async (): Promise<IPokemonGeneration[]> => {
-        // Create pokedex instance.
+        // If the cache has no data create pokedex instance.
         const P = new Pokedex();
         // Query all available generations.
         const result = (await P.getGenerationsList()) as NamedAPIResourceList;
@@ -57,7 +75,15 @@ const Home: NextPage = () => {
      * @param {string} languageKey The requested language of the pokemon names.
      * @returns {IPokemon[]} The list of pokemon in the requested generation.
      */
-    const fetchPokemon = async (genName: string, languageKey: string): Promise<IPokemon[]> => {
+    const fetchPokemon = useCallback(async (genName: string, languageKey: string): Promise<IPokemon[]> => {
+        // Retrieve the poke api data from cache.
+        const cache = getPokeApiDataFromCache();
+        // Check if the cache contains the needed data for the requested generation name.
+        const cachedGeneration = cache?.generations.find((g) => g.name === genName);
+        if (cachedGeneration && cachedGeneration.pokemon[languageKey] && cachedGeneration.pokemon[languageKey].length > 0) {
+            // If a cached generation is found and it contains the list of pokemon, return the result.
+            return cachedGeneration.pokemon[languageKey];
+        }
         // Create pokedex instance.
         const P = new Pokedex();
         // Query the generation.
@@ -78,8 +104,32 @@ const Home: NextPage = () => {
             result.sort((a, b) => (a.id < b.id ? -1 : 1));
             return result;
         });
+        if (!cachedGeneration || (cachedGeneration && (!cachedGeneration.pokemon[languageKey] || cachedGeneration.pokemon[languageKey].length <= 0))) {
+            // If there is no cache for the current generation, or the cached generation contains no pokemon, fill the cache.
+            const tmpCacheModel = { ...cache };
+            if (!tmpCacheModel.generations) {
+                // If there are no generations ion cache yet, init it.
+                tmpCacheModel.generations = [];
+            }
+            const currentGenCache = tmpCacheModel.generations?.find((g) => g.name === generation.name);
+            if (currentGenCache) {
+                // If the current gen exists, add the pokemon for the requested language.
+                currentGenCache.pokemon[languageKey] = result;
+            } else {
+                // Create gen model to add to cache.
+                const genToAdd: IPokemonGeneration = {
+                    name: generation.name,
+                    pokemon: {},
+                };
+                genToAdd.pokemon[languageKey] = result;
+                // Push new generation model to the cache.
+                tmpCacheModel.generations.push(genToAdd);
+            }
+            // Update the cache in the local storage.
+            localStorage.setItem(pokeApiDataCacheKey, JSON.stringify(tmpCacheModel));
+        }
         return result;
-    };
+    }, []);
 
     /**
      * Save the current progress of the game.
@@ -189,7 +239,7 @@ const Home: NextPage = () => {
             }
         };
         fetchData();
-    }, [generations, i18n.language, selectedGenerationNames]);
+    }, [fetchPokemon, generations, i18n.language, selectedGenerationNames]);
 
     /**
      * Determines whether a pokemon is contained in the user guess list or not.
@@ -280,27 +330,29 @@ const Home: NextPage = () => {
                                 ))}
                             <div>{isBusy && 'Loading ...'}</div>
                         </div>
-                        <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2">
-                            <div className="flex flex-col max-w-max overflow-y-auto overflow-x-hidden">
-                                <div className="min-h-content p-3">
-                                    {pokemonToFind.map((p, i) => (
-                                        <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="flex flex-1 justify-center items-start mt-16">
-                                {lastGuessedPokemon && (
-                                    <div className="flex flex-col justify-center items-center ">
-                                        <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
-                                        <Image
-                                            height={320}
-                                            width={320}
-                                            alt=""
-                                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
-                                        />
-                                        <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                        <div className="flex flex-1 relative overflow-hidden">
+                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2 overflow-y-auto z-10">
+                                <div className="flex flex-col max-w-max">
+                                    <div className="min-h-content p-3">
+                                        {pokemonToFind.map((p, i) => (
+                                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
+                                        ))}
                                     </div>
-                                )}
+                                </div>
+                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-0">
+                                    {lastGuessedPokemon && (
+                                        <div className="flex flex-col justify-center items-center bg-gray-200 rounded-lg shadow-sm p-4">
+                                            <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
+                                            <Image
+                                                height={320}
+                                                width={320}
+                                                alt=""
+                                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
+                                            />
+                                            <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
