@@ -23,17 +23,12 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }: AppProps) =>
     /** Initialize the application. */
     useEffect(() => {
         const storedSettingsString = localStorage.getItem('userSettings');
-        Store.getActions().UserModel.updateUserSettings(
-            storedSettingsString
-                ? JSON.parse(storedSettingsString)
-                : {
-                    language: '',
-                }
-        );
-        const storedUserSettings = storedSettingsString ? JSON.parse(storedSettingsString) : undefined;
-        if (storedUserSettings) {
-            Store.getActions().UserModel.updateUserSettings(storedUserSettings);
-        }
+        const userSettings = storedSettingsString
+            ? JSON.parse(storedSettingsString)
+            : {
+                language: '',
+            };
+        Store.getActions().UserModel.updateUserSettings(userSettings);
         const initLanguage = Store.getState().UserModel.userSettings?.language ? Store.getState().UserModel.userSettings?.language : getBrowserLanguageCodeShort();
         // Initialize i18next.
         initialize(initLanguage).then((i) => {
@@ -48,7 +43,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }: AppProps) =>
      */
     const CustomHead = () => (
         <Head>
-            <title>Pokemon</title>
+            <title>Poke Guess</title>
             <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="description" content="Guess the pokedex." />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
