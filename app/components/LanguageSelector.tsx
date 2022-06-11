@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
 import { TranslateIcon } from '@heroicons/react/solid';
-import { useTranslation } from 'react-i18next';
-import { useStoreActions, useStoreState } from '../store/Store';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
+import React, { FunctionComponent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { useStoreActions, useStoreState } from '../store/Store';
 
 /**
  * Component to select and switch the application display language.
@@ -51,7 +52,7 @@ export const LanguageSelector: FunctionComponent = () => {
                     {icon}
                 </button>
             </PopoverPrimitive.Trigger>
-            <PopoverPrimitive.Content align='start'>
+            <PopoverPrimitive.Content align="start">
                 <div className="flex flex-1 z-30 shadow rounded-lg bg-white">
                     <ul className="list-none">
                         <li>

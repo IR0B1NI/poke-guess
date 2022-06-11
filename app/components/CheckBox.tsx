@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import * as PrimitiveCheckBox from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@heroicons/react/solid';
+import * as PrimitiveCheckBox from '@radix-ui/react-checkbox';
+import React, { FunctionComponent } from 'react';
 
 export interface ICheckBoxProps {
     /** The text to display. */

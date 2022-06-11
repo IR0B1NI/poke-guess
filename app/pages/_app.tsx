@@ -1,14 +1,15 @@
 import '../styles/global-styles.css';
 
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { initialize } from '../helper/LocalizationHelper';
-import { I18nextProvider } from 'react-i18next';
-import { i18n } from 'i18next';
-import Head from 'next/head';
-import { Store } from '../store/Store';
 import { StoreProvider } from 'easy-peasy';
-import { getBrowserLanguageCodeShort } from '../helper/BrowserHelper';
+import { i18n } from 'i18next';
 import { AppProps } from 'next/app';
+import Head from 'next/head';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { I18nextProvider } from 'react-i18next';
+
+import { getBrowserLanguageCodeShort } from '../helper/BrowserHelper';
+import { initialize } from '../helper/LocalizationHelper';
+import { Store } from '../store/Store';
 
 /**
  * The main entry point of the next js application.
@@ -52,6 +53,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }: AppProps) =>
     );
 
     return i18nInstance ? (
+        /* @ts-expect-error: Ignore no children prop error. */
         <StoreProvider store={Store}>
             <I18nextProvider i18n={i18nInstance}>
                 <CustomHead />

@@ -1,5 +1,6 @@
 import i18next, { i18n, InitOptions } from 'i18next';
 import { initReactI18next } from 'react-i18next';
+
 import german from '../assets/translations/de.json';
 import english from '../assets/translations/en.json';
 

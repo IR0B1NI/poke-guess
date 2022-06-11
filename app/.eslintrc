@@ -1,6 +1,6 @@
 {
     "parser": "@typescript-eslint/parser",
-    "plugins": ["prettier", "@typescript-eslint", "react", "jsdoc"],
+    "plugins": ["prettier", "@typescript-eslint", "react", "jsdoc", "simple-import-sort", "import"],
     "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended", "plugin:jsdoc/recommended", "prettier"],
     "env": { "browser": true },
     "rules": {
@@ -17,7 +17,11 @@
         "react/jsx-indent-props": ["error", 4],
         "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off",
-        "react/state-in-constructor": ["error", "never"]
+        "react/state-in-constructor": ["error", "never"],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error"
     },
     "settings": {
         "import/resolver": "webpack",

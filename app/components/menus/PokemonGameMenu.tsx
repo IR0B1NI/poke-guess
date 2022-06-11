@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useState, KeyboardEvent } from 'react';
+import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { DefaultButton } from '../button/DefaultButton';
 import { PrimaryButton } from '../button/PrimaryButton';
 import { TextField } from '../TextField';
@@ -17,7 +18,7 @@ export interface IPokemonGameMenuProps {
 
 /**
  * The pokemon game menu.
- * 
+ *
  * @param {IPokemonGameMenuProps} props The properties of the menu.
  * @returns {FunctionComponent} The pokemon game menu component.
  */

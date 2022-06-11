@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react';
 import { XIcon } from '@heroicons/react/solid';
+import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { DefaultButton } from '../button/DefaultButton';
-import { PrimaryButton } from '../button/PrimaryButton';
 import { IconButton } from '../button/IconButton';
+import { PrimaryButton } from '../button/PrimaryButton';
 
 export interface IConfirmDialogProps {
     /** Whether the dialog is open or not. */
@@ -22,7 +23,7 @@ export interface IConfirmDialogProps {
 
 /**
  * Confirm dialog component.
- * 
+ *
  * @param {IConfirmDialogProps} props The properties of the dialog.
  * @returns {FunctionComponent} The custom dialog component.
  */
