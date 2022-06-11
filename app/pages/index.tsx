@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
-import { BasicLayout } from '../components/layouts/BasicLayout';
-import { useTranslation } from 'react-i18next';
-import { IPokemon } from '../types/IPokemon';
-import { IPokemonGeneration } from '../types/IPokemonGeneration';
-import { PokemonGameMenu } from '../components/menus/PokemonGameMenu';
-import { CheckBox } from '../components/CheckBox';
-import { IPokemonGameSave } from '../types/IPokemonGameSave';
 import Image from 'next/image';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { CheckBox } from '../components/CheckBox';
+import { BasicLayout } from '../components/layouts/BasicLayout';
+import { PokemonGameMenu } from '../components/menus/PokemonGameMenu';
+import { IPokemon } from '../types/IPokemon';
 import { IPokemonApiCache } from '../types/IPokemonApiCache';
+import { IPokemonGameSave } from '../types/IPokemonGameSave';
+import { IPokemonGeneration } from '../types/IPokemonGeneration';
 
 /**
  * The page component to render at "/".

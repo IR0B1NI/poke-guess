@@ -1,4 +1,5 @@
 import { Action, action } from 'easy-peasy';
+
 import { IUserSettings } from '../../types/IUserSettings';
 
 /** The key to access the stored user settings in the browser storage. */

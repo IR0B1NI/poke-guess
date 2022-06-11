@@ -1,5 +1,6 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
-import { UserModel, IUserModel } from './model/UserModel';
+
+import { IUserModel, UserModel } from './model/UserModel';
 
 /**
  * Interface for the store model.
@@ -20,7 +21,7 @@ const StoreModel: IStoreModel = {
 const { useStoreActions, useStoreState, useStoreDispatch, useStore } = createTypedHooks<IStoreModel>();
 
 // offer typed hooks for consumers
-export { useStoreActions, useStoreState, useStoreDispatch, useStore };
+export { useStore,useStoreActions, useStoreDispatch, useStoreState };
 
 /**
  * The store.
