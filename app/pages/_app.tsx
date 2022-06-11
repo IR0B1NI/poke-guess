@@ -52,6 +52,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }: AppProps) =>
     );
 
     return i18nInstance ? (
+        /* @ts-expect-error: Ignore no children prop error. */
         <StoreProvider store={Store}>
             <I18nextProvider i18n={i18nInstance}>
                 <CustomHead />
