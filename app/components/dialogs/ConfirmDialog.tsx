@@ -1,6 +1,6 @@
 import { XIcon } from '@heroicons/react/solid';
+import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { DefaultButton } from '../button/DefaultButton';
 import { IconButton } from '../button/IconButton';

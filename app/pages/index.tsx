@@ -1,8 +1,9 @@
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { CheckBox } from '../components/CheckBox';
 import { BasicLayout } from '../components/layouts/BasicLayout';
@@ -361,6 +362,18 @@ const Home: NextPage = () => {
             </div>
         </BasicLayout>
     );
+};
+
+/**
+ * Server side executed method to inject properties into the component.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getStaticProps: GetStaticProps = async ({ locale }: { [key: string]: any }) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['common'])),
+        },
+    };
 };
 
 export default Home;
