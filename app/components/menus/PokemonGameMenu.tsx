@@ -1,5 +1,5 @@
+import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { DefaultButton } from '../button/DefaultButton';
 import { PrimaryButton } from '../button/PrimaryButton';
