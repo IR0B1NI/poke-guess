@@ -1,8 +1,8 @@
 import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
 
-import { DefaultButton } from '../button/DefaultButton';
-import { PrimaryButton } from '../button/PrimaryButton';
+import DefaultButton from '../button/defaultButton';
+import PrimaryButton from '../button/primaryButton';
 import { TextField } from '../TextField';
 
 export interface IPokemonGameMenuProps {

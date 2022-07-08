@@ -2,9 +2,9 @@ import { XIcon } from '@heroicons/react/solid';
 import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent } from 'react';
 
-import { DefaultButton } from '../button/DefaultButton';
-import { IconButton } from '../button/IconButton';
-import { PrimaryButton } from '../button/PrimaryButton';
+import DefaultButton from '../button/defaultButton';
+import IconButton from '../button/iconButton';
+import PrimaryButton from '../button/primaryButton';
 
 export interface IConfirmDialogProps {
     /** Whether the dialog is open or not. */

@@ -20,10 +20,12 @@ export interface IIconButtonProps {
  * @param {IIconButtonProps} props The properties of the icon button component.
  * @returns {FunctionComponent} The icon button component.
  */
-export const IconButton: FunctionComponent<IIconButtonProps> = (props) => {
+const IconButton: FunctionComponent<IIconButtonProps> = (props) => {
     return (
         <button aria-label={props.ariaLabel} className={`p-2 rounded-full ${props.className && props.className}`} onClick={props.onClick}>
             {props.icon}
         </button>
     );
 };
+
+export default IconButton;
