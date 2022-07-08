@@ -309,7 +309,8 @@ const Home: NextPage = () => {
                                             value={generationName}
                                             text={generationName}
                                             checked={selectedGenerationNames.includes(generationName)}
-                                            onChange={(checked) => {
+                                            onChange={(event) => {
+                                                const checked = event.target.checked;
                                                 if (checked && generationName) {
                                                     // Add to state.
                                                     const newState = [...selectedGenerationNames];
