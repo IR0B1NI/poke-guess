@@ -5,9 +5,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { CheckBox } from '../components/CheckBox';
-import { BasicLayout } from '../components/layouts/BasicLayout';
-import { PokemonGameMenu } from '../components/menus/PokemonGameMenu';
+import CheckBox from '../components/checkBox';
+import BasicLayout from '../components/layouts/basicLayout';
+import PokemonGameMenu from '../components/menus/pokemonGameMenu';
 import { IPokemon } from '../types/IPokemon';
 import { IPokemonApiCache } from '../types/IPokemonApiCache';
 import { IPokemonGameSave } from '../types/IPokemonGameSave';

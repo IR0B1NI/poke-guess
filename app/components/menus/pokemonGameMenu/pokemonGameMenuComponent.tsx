@@ -1,9 +1,9 @@
 import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
 
-import DefaultButton from '../button/defaultButton';
-import PrimaryButton from '../button/primaryButton';
-import { TextField } from '../TextField';
+import DefaultButton from '../../button/defaultButton';
+import PrimaryButton from '../../button/primaryButton';
+import TextField from '../../textField';
 
 export interface IPokemonGameMenuProps {
     /** The callback to handle the user input. */
@@ -22,7 +22,7 @@ export interface IPokemonGameMenuProps {
  * @param {IPokemonGameMenuProps} props The properties of the menu.
  * @returns {FunctionComponent} The pokemon game menu component.
  */
-export const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
+const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
     /** Access to translations. */
     const { t } = useTranslation();
 
@@ -79,3 +79,5 @@ export const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props)
         </div>
     );
 };
+
+export default PokemonGameMenu;

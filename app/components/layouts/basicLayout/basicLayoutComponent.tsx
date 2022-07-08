@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 
-import { TopMenu } from '../menus/TopMenu';
+import TopMenu from '../../menus/topMenu';
 
 interface IBasicLayoutProps {
     /** The children to render. */
@@ -13,7 +13,7 @@ interface IBasicLayoutProps {
  * @param {IBasicLayoutProps} props The children to render.
  * @returns {FunctionComponent} The basic layout component.
  */
-export const BasicLayout: FunctionComponent<IBasicLayoutProps> = (props) => {
+const BasicLayout: FunctionComponent<IBasicLayoutProps> = (props) => {
     return (
         <div className="flex flex-1 flex-col max-h-screen overflow-hidden">
             <TopMenu />
@@ -21,3 +21,5 @@ export const BasicLayout: FunctionComponent<IBasicLayoutProps> = (props) => {
         </div>
     );
 };
+
+export default BasicLayout;

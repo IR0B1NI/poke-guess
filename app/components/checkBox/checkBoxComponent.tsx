@@ -19,7 +19,7 @@ export interface ICheckBoxProps {
  * @param {ICheckBoxProps} props The properties of the checkbox.
  * @returns {FunctionComponent} The basic checkbox.
  */
-export const CheckBox: FunctionComponent<ICheckBoxProps> = (props) => {
+const CheckBox: FunctionComponent<ICheckBoxProps> = (props) => {
     return (
         <div className="flex max-w-max items-center">
             <input
@@ -34,3 +34,5 @@ export const CheckBox: FunctionComponent<ICheckBoxProps> = (props) => {
         </div>
     );
 };
+
+export default CheckBox;
