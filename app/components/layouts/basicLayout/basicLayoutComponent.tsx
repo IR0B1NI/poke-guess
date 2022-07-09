@@ -15,9 +15,9 @@ interface IBasicLayoutProps {
  */
 const BasicLayout: FunctionComponent<IBasicLayoutProps> = (props) => {
     return (
-        <div className="flex flex-1 flex-col max-h-screen overflow-hidden">
+        <div className="flex flex-1 flex-col max-h-screen sm:overflow-hidden">
             <TopMenu />
-            <div className="flex flex-1 flex-col overflow-hidden">{props.children}</div>
+            <div className="flex flex-1 flex-col sm:overflow-hidden">{props.children}</div>
         </div>
     );
 };

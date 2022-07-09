@@ -5,11 +5,11 @@
 html,
 body,
 #__next {
-    @apply p-0 m-0 min-w-full w-full min-h-screen max-w-full overflow-hidden;
+    @apply p-0 m-0 min-w-full w-full min-h-screen max-w-full sm:overflow-hidden;
 }
 
 #__next {
-    @apply flex flex-col overflow-hidden;
+    @apply flex flex-col;
 }
 
 * {
