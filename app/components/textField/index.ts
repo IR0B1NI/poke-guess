@@ -1,3 +1,3 @@
-import TextField from './textField.tsxComponent';
+import TextField from './textFieldComponent';
 
 export default TextField;

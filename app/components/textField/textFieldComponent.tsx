@@ -22,7 +22,7 @@ export interface ITextFieldProps {
 const TextField: FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <input
-            className="input input-bordered input-primary"
+            className="input"
             readOnly={props.readOnly}
             type="text"
             placeholder={props.placeholder}

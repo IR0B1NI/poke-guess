@@ -1,9 +1,9 @@
 import { useTranslation } from 'next-i18next';
-import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 
 import DefaultButton from '../../button/defaultButton';
 import PrimaryButton from '../../button/primaryButton';
-import TextField from '../../textField';
+import TextInputGroup from '../../textInputGroup';
 
 export interface IPokemonGameMenuProps {
     /** The callback to handle the user input. */
@@ -26,8 +26,6 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
     /** Access to translations. */
     const { t } = useTranslation();
 
-    /** The current input of the user in the text field. */
-    const [currentUserInput, setCurrentUserInput] = useState<string>('');
     /** Whether to abort dialog is open or not. */
     const [isAbortDialogOpen, setIsAbortDialogOpen] = useState<boolean>(false);
 
@@ -52,21 +50,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                     </div>
                 </div>
             )}
-            <TextField
-                placeholder={t('Pokemon_Input_Placeholder')}
-                value={currentUserInput}
-                onChange={(newValue) => setCurrentUserInput(newValue)}
-                onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-                    // Check if the user pressed enter to confirm the current input.
-                    if (event.key !== 'Enter') {
-                        return;
-                    }
-                    // Execute the callback to handle the current user input.
-                    props.handleUserInput(currentUserInput);
-                    // Reset the state of the users input.
-                    setCurrentUserInput('');
-                }}
-            />
+            <TextInputGroup placeholder={t('Pokemon_Input_Placeholder')} submit={props.handleUserInput} />
             <div className="flex justify-center mt-8">
                 <h4>{t('Pokemon_CurrentProgress_Headline')}</h4>
             </div>
