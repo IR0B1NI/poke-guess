@@ -17,7 +17,7 @@ export interface IPrimaryButtonProps {
  */
 const PrimaryButton: FunctionComponent<IPrimaryButtonProps> = (props) => {
     return (
-        <button className={`text-xs max-w-max px-5 py-3 bg-green-300 shadow-md active:opacity-50 ${props.className && props.className}`} onClick={props.onClick}>
+        <button className={`btn btn-primary ${props.className && props.className}`} onClick={props.onClick}>
             {props.text}
         </button>
     );

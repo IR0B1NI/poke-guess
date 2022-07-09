@@ -38,8 +38,8 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                     <h4>{t('Pokemon_ResetDialog_Headline')}</h4>
                     <div className="mt-7">{t('Pokemon_ResetDialog_Text')}</div>
                     <div className="flex justify-end items-center mt-auto">
-                        <PrimaryButton
-                            className="bg-red-700 mr-7"
+                        <DefaultButton
+                            className="btn-warning mr-7"
                             text={t('Pokemon_ResetDialog_Confirm')}
                             onClick={() => {
                                 if (props.resetGame) {
@@ -74,7 +74,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                 {props.currentScore} / {props.maxScore}
             </div>
             <div className="flex w-full mt-16">
-                <PrimaryButton text={t('Pokemon_ResetButton_Text')} onClick={() => setIsAbortDialogOpen(true)} className="bg-turquoise min-w-full" />
+                <PrimaryButton text={t('Pokemon_ResetButton_Text')} onClick={() => setIsAbortDialogOpen(true)} className="min-w-full" />
             </div>
         </div>
     );

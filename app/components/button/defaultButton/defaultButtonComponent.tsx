@@ -17,7 +17,7 @@ export interface IDefaultButtonProps {
  */
 const DefaultButton: FunctionComponent<IDefaultButtonProps> = (props) => {
     return (
-        <button className={`text-xs max-w-max px-5 py-3 bg-transparent ${props.className && props.className}`} onClick={props.onClick}>
+        <button className={`btn ${props.className && props.className}`} onClick={props.onClick}>
             {props.text}
         </button>
     );
