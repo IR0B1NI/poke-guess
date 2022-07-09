@@ -25,7 +25,7 @@ const LanguageSelector: FunctionComponent = () => {
             <label aria-label={t('Language_Button_Aria_Label')} tabIndex={0} className="btn btn-circle btn-ghost mb-1">
                 {icon}
             </label>
-            <ul tabIndex={0} className="dropdown-content bg-white menu shadow rounded-box w-40">
+            <ul tabIndex={0} className="dropdown-content bg-white dark:bg-base-100 menu shadow rounded-box w-40">
                 <li className={`${i18n.language === 'en' && 'disabled'}`}>
                     {i18n.language !== 'en' ? (
                         <Link href={router.asPath} locale={'en'}>

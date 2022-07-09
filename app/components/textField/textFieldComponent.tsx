@@ -22,7 +22,7 @@ export interface ITextFieldProps {
 const TextField: FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <input
-            className="input"
+            className="input w-full"
             readOnly={props.readOnly}
             type="text"
             placeholder={props.placeholder}
