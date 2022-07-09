@@ -9,18 +9,26 @@ module.exports = {
             },
             colors: {
                 black: '#333333',
-                turquoise: '#66FFE5'
+                turquoise: '#66FFE5',
             },
             fontSize: {
                 xxs: '0.625rem',
             },
             minHeight: {
-                'content': 'min-content',
+                content: 'min-content',
             },
         },
     },
     variants: {
         extend: {},
     },
-    plugins: [require("daisyui")],
+    plugins: [require('daisyui')],
+    daisyui: {
+        styled: true,
+        themes: ['light', 'dark'],
+        base: true,
+        utils: true,
+        logs: true,
+        darkTheme: 'dark',
+    },
 };
