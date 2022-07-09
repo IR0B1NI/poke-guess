@@ -344,7 +344,7 @@ const Home: NextPage = () => {
                                 </div>
                                 <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-0">
                                     {lastGuessedPokemon && (
-                                        <div className="flex flex-col justify-center items-center bg-gray-200 rounded-lg shadow-sm p-4">
+                                        <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
                                             <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
                                             <Image
                                                 height={320}
