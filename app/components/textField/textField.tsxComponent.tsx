@@ -22,7 +22,7 @@ export interface ITextFieldProps {
 const TextField: FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <input
-            className="px-5 py-3 border-b outline-none bg-transparent"
+            className="input input-bordered input-primary"
             readOnly={props.readOnly}
             type="text"
             placeholder={props.placeholder}
