@@ -298,7 +298,7 @@ const Home: NextPage = () => {
     return (
         <BasicLayout>
             <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
-            <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-44 sm:mb-0">
+            <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-28 sm:mb-0">
                 <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
                 <div className="flex overflow-x-auto min-h-16">
                     {generations?.keys &&
