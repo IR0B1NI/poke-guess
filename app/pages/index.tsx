@@ -5,9 +5,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import AutoDismissAlert from '../components/alerts/autoDismissAlert';
 import CheckBox from '../components/checkBox';
 import BasicLayout from '../components/layouts/basicLayout';
 import PokemonGameMenu from '../components/menus/pokemonGameMenu';
+import { AlertType } from '../types/AlertType';
 import { IPokemon } from '../types/IPokemon';
 import { IPokemonApiCache } from '../types/IPokemonApiCache';
 import { IPokemonGameSave } from '../types/IPokemonGameSave';
@@ -34,6 +36,8 @@ const Home: NextPage = () => {
     const [foundPokemon, setFoundPokemon] = useState<string[]>([]);
     /** The state of the last guessed pokemon. */
     const [lastGuessedPokemon, setLastGuessedPokemon] = useState<IPokemon>();
+    /** Whether the alert must be shown or not. */
+    const [showAlert, setShowAlert] = useState<boolean>(false);
 
     /** The abort controller to use. */
     const abortController = useRef<AbortController>();
@@ -268,7 +272,7 @@ const Home: NextPage = () => {
         const isInputValid = pokemon && !foundPokemon.includes(userInputValue);
         if (!isInputValid) {
             // If not, alert the user.
-            alert('Nope ...');
+            setShowAlert(true);
         } else {
             // If yes, update the state.
             const newUserInputState = [...foundPokemon];
@@ -293,6 +297,7 @@ const Home: NextPage = () => {
 
     return (
         <BasicLayout>
+            <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
             <div className="flex flex-1 justify-center overflow-y-auto">
                 <div>
                     <PokemonGameMenu currentScore={calculateScore()} maxScore={pokemonToFind.length} handleUserInput={handleUserInput} resetGame={resetGameState} />
