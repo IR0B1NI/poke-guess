@@ -341,7 +341,7 @@ const Home: NextPage = () => {
                     </div>
                 </div>
                 {lastGuessedPokemon && (
-                    <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
+                    <div className="fixed top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2  bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
                         <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
                         <Image height={320} width={320} alt="" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`} />
                         <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
