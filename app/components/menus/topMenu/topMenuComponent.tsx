@@ -2,6 +2,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FunctionComponent } from 'react';
 
+import DarkModeToggle from '../../darkModeToggle';
 import LanguageSelector from '../../languageSelector';
 
 /**
@@ -16,6 +17,7 @@ const TopMenu: FunctionComponent = () => {
                 <FontAwesomeIcon icon={faGithub} size="lg" className="h-5 w-5" />
             </a>
             <div className="flex ml-auto">
+                <DarkModeToggle />
                 <LanguageSelector />
             </div>
         </div>
