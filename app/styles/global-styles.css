@@ -13,11 +13,7 @@ body,
 }
 
 * {
-    @apply text-sm text-black;
-}
-
-button {
-    @apply active:bg-gray-200 bg-transparent min-w-max rounded-lg disabled:opacity-50 disabled:bg-transparent;
+    @apply text-sm;
 }
 
 h1 {
@@ -34,16 +30,4 @@ h3 {
 
 h4 {
     @apply text-lg;
-}
-
-.vertical-timeline-element-content {
-    @apply shadow !important;
-}
-
-.vertical-timeline-element-icon {
-    @apply shadow-none !important;
-}
-
-.vertical-timeline::before {
-    @apply bg-black rounded-full !important;
 }

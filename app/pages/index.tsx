@@ -5,9 +5,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { CheckBox } from '../components/CheckBox';
-import { BasicLayout } from '../components/layouts/BasicLayout';
-import { PokemonGameMenu } from '../components/menus/PokemonGameMenu';
+import AutoDismissAlert from '../components/alerts/autoDismissAlert';
+import CheckBox from '../components/checkBox';
+import BasicLayout from '../components/layouts/basicLayout';
+import PokemonGameMenu from '../components/menus/pokemonGameMenu';
+import { AlertType } from '../types/AlertType';
 import { IPokemon } from '../types/IPokemon';
 import { IPokemonApiCache } from '../types/IPokemonApiCache';
 import { IPokemonGameSave } from '../types/IPokemonGameSave';
@@ -34,6 +36,8 @@ const Home: NextPage = () => {
     const [foundPokemon, setFoundPokemon] = useState<string[]>([]);
     /** The state of the last guessed pokemon. */
     const [lastGuessedPokemon, setLastGuessedPokemon] = useState<IPokemon>();
+    /** Whether the alert must be shown or not. */
+    const [showAlert, setShowAlert] = useState<boolean>(false);
 
     /** The abort controller to use. */
     const abortController = useRef<AbortController>();
@@ -268,7 +272,7 @@ const Home: NextPage = () => {
         const isInputValid = pokemon && !foundPokemon.includes(userInputValue);
         if (!isInputValid) {
             // If not, alert the user.
-            alert('Nope ...');
+            setShowAlert(true);
         } else {
             // If yes, update the state.
             const newUserInputState = [...foundPokemon];
@@ -293,6 +297,7 @@ const Home: NextPage = () => {
 
     return (
         <BasicLayout>
+            <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
             <div className="flex flex-1 justify-center overflow-y-auto">
                 <div>
                     <PokemonGameMenu currentScore={calculateScore()} maxScore={pokemonToFind.length} handleUserInput={handleUserInput} resetGame={resetGameState} />
@@ -305,11 +310,13 @@ const Home: NextPage = () => {
                                 Array.from(generations.keys()).map((generationName, i) => (
                                     <div key={`generation-${i}`} className="flex p-4 justify-center items-center min-w-max">
                                         <CheckBox
+                                            ariaLabel={generationName}
                                             disabled={isBusy}
                                             value={generationName}
                                             text={generationName}
                                             checked={selectedGenerationNames.includes(generationName)}
-                                            onChange={(checked) => {
+                                            onChange={(event) => {
+                                                const checked = event.target.checked;
                                                 if (checked && generationName) {
                                                     // Add to state.
                                                     const newState = [...selectedGenerationNames];
@@ -333,7 +340,7 @@ const Home: NextPage = () => {
                             <div>{isBusy && 'Loading ...'}</div>
                         </div>
                         <div className="flex flex-1 relative overflow-hidden">
-                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2 overflow-y-auto z-10">
+                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-t-2 overflow-y-auto z-10">
                                 <div className="flex flex-col max-w-max">
                                     <div className="min-h-content p-3">
                                         {pokemonToFind.map((p, i) => (
@@ -343,7 +350,7 @@ const Home: NextPage = () => {
                                 </div>
                                 <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-0">
                                     {lastGuessedPokemon && (
-                                        <div className="flex flex-col justify-center items-center bg-gray-200 rounded-lg shadow-sm p-4">
+                                        <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
                                             <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
                                             <Image
                                                 height={320}

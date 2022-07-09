@@ -19,10 +19,10 @@ export interface ITextFieldProps {
  * @param {ITextFieldProps} props The properties of the text field.
  * @returns {FunctionComponent} The text field component.
  */
-export const TextField: FunctionComponent<ITextFieldProps> = (props) => {
+const TextField: FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <input
-            className="text-black px-5 py-3 border-b border-b-black outline-none bg-transparent"
+            className="input w-full"
             readOnly={props.readOnly}
             type="text"
             placeholder={props.placeholder}
@@ -36,3 +36,5 @@ export const TextField: FunctionComponent<ITextFieldProps> = (props) => {
         />
     );
 };
+
+export default TextField;
