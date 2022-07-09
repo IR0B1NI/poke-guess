@@ -298,74 +298,58 @@ const Home: NextPage = () => {
     return (
         <BasicLayout>
             <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
-            <div className="flex flex-1 justify-center overflow-y-auto">
-                <div>
-                    <PokemonGameMenu currentScore={calculateScore()} maxScore={pokemonToFind.length} handleUserInput={handleUserInput} resetGame={resetGameState} />
-                </div>
-                <div className="flex flex-1 flex-col max-w-screen-xl items-center mt-20 overflow-y-auto">
-                    <h1>{t('Index_Headline')}</h1>
-                    <div className="flex flex-1 w-full flex-col overflow-hidden mt-16">
-                        <div className="flex w-full flex-wrap mb-10 items-center justify-center">
-                            {generations?.keys &&
-                                Array.from(generations.keys()).map((generationName, i) => (
-                                    <div key={`generation-${i}`} className="flex p-4 justify-center items-center min-w-max">
-                                        <CheckBox
-                                            ariaLabel={generationName}
-                                            disabled={isBusy}
-                                            value={generationName}
-                                            text={generationName}
-                                            checked={selectedGenerationNames.includes(generationName)}
-                                            onChange={(event) => {
-                                                const checked = event.target.checked;
-                                                if (checked && generationName) {
-                                                    // Add to state.
-                                                    const newState = [...selectedGenerationNames];
-                                                    newState.push(generationName);
-                                                    setSelectedGenerationNames([...newState]);
-                                                    saveGameState(newState, foundPokemon);
-                                                } else {
-                                                    // Remove from state.
-                                                    const index = selectedGenerationNames.findIndex((v) => v === generationName);
-                                                    if (index !== -1) {
-                                                        const newState = [...selectedGenerationNames];
-                                                        newState.splice(index, 1);
-                                                        setSelectedGenerationNames([...newState]);
-                                                        saveGameState(newState, foundPokemon);
-                                                    }
-                                                }
-                                            }}
-                                        />
-                                    </div>
-                                ))}
-                            <div>{isBusy && 'Loading ...'}</div>
-                        </div>
-                        <div className="flex flex-1 relative overflow-hidden">
-                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-t-2 overflow-y-auto z-10">
-                                <div className="flex flex-col max-w-max">
-                                    <div className="min-h-content p-3">
-                                        {pokemonToFind.map((p, i) => (
-                                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-0">
-                                    {lastGuessedPokemon && (
-                                        <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
-                                            <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
-                                            <Image
-                                                height={320}
-                                                width={320}
-                                                alt=""
-                                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
-                                            />
-                                            <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
-                                        </div>
-                                    )}
-                                </div>
+            <div id="content-container" className="flex flex-1 flex-col overflow-hidden mb-44 sm:mb-0">
+                <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
+                <div className="flex overflow-x-auto min-h-16">
+                    {generations?.keys &&
+                        Array.from(generations.keys()).map((generationName, i) => (
+                            <div key={`generation-${i}`} className="flex p-4 justify-center items-center min-w-max">
+                                <CheckBox
+                                    ariaLabel={generationName}
+                                    disabled={isBusy}
+                                    value={generationName}
+                                    text={generationName}
+                                    checked={selectedGenerationNames.includes(generationName)}
+                                    onChange={(event) => {
+                                        const checked = event.target.checked;
+                                        if (checked && generationName) {
+                                            // Add to state.
+                                            const newState = [...selectedGenerationNames];
+                                            newState.push(generationName);
+                                            setSelectedGenerationNames([...newState]);
+                                            saveGameState(newState, foundPokemon);
+                                        } else {
+                                            // Remove from state.
+                                            const index = selectedGenerationNames.findIndex((v) => v === generationName);
+                                            if (index !== -1) {
+                                                const newState = [...selectedGenerationNames];
+                                                newState.splice(index, 1);
+                                                setSelectedGenerationNames([...newState]);
+                                                saveGameState(newState, foundPokemon);
+                                            }
+                                        }
+                                    }}
+                                />
                             </div>
-                        </div>
+                        ))}
+                </div>
+                <div className="flex flex-1 flex-col overflow-y-auto">
+                    <div>
+                        {pokemonToFind.map((p, i) => (
+                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
+                        ))}
                     </div>
                 </div>
+                {lastGuessedPokemon && (
+                    <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
+                        <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
+                        <Image height={320} width={320} alt="" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`} />
+                        <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                    </div>
+                )}
+            </div>
+            <div className="w-full fixed bottom-0 sm:relative">
+                <PokemonGameMenu handleUserInput={handleUserInput} resetGame={resetGameState} />
             </div>
         </BasicLayout>
     );

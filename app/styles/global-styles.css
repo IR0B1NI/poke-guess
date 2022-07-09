@@ -9,7 +9,7 @@ body,
 }
 
 #__next {
-    @apply flex flex-col overflow-hidden;
+    @apply flex flex-col;
 }
 
 * {

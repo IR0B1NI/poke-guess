@@ -1,3 +1,4 @@
+import { RefreshIcon } from '@heroicons/react/solid';
 import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, useState } from 'react';
 
@@ -8,10 +9,6 @@ import TextInputGroup from '../../textInputGroup';
 export interface IPokemonGameMenuProps {
     /** The callback to handle the user input. */
     handleUserInput: (userInputValue: string) => void;
-    /** The current  */
-    currentScore?: number;
-    /** The maximum possible score. */
-    maxScore?: number;
     /** Callback to reset the game state and stored save. */
     resetGame?: () => void;
 }
@@ -30,7 +27,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
     const [isAbortDialogOpen, setIsAbortDialogOpen] = useState<boolean>(false);
 
     return (
-        <div className="bg-green-300 fixed bottom-10 right-10 flex flex-col rounded-xl p-10 w-96 z-50">
+        <div className="flex bg-green-300 p-5 w-full">
             {isAbortDialogOpen && (
                 <div className="flex rounded-lg shadow-sm flex-col p-4 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-green-300 w-96 h-52">
                     <h4>{t('Pokemon_ResetDialog_Headline')}</h4>
@@ -38,7 +35,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                     <div className="flex justify-end items-center mt-auto">
                         <DefaultButton
                             ariaLabel={t('PokemonGameMenu_ResetDialog_Confirm_Aria_Label')}
-                            className="btn-warning mr-7"
+                            className="btn-error mr-7"
                             text={t('Pokemon_ResetDialog_Confirm')}
                             onClick={() => {
                                 if (props.resetGame) {
@@ -55,20 +52,21 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                     </div>
                 </div>
             )}
-            <TextInputGroup placeholder={t('Pokemon_Input_Placeholder')} submit={props.handleUserInput} />
-            <div className="flex justify-center mt-8">
-                <h4>{t('Pokemon_CurrentProgress_Headline')}</h4>
-            </div>
-            <div className="flex justify-center mt-4 text-5xl">
-                {props.currentScore} / {props.maxScore}
-            </div>
-            <div className="flex w-full mt-16">
+            <div className="flex flex-1">
+                <TextInputGroup placeholder={t('Pokemon_Input_Placeholder')} submit={props.handleUserInput} />
                 <PrimaryButton
                     ariaLabel={t('PokemonGameMenu_ResetButton_Aria_Label')}
                     text={t('Pokemon_ResetButton_Text')}
                     onClick={() => setIsAbortDialogOpen(true)}
-                    className="min-w-full"
+                    className="ml-2 hidden sm:flex btn-error"
                 />
+                <button
+                    aria-label={t('PokemonGameMenu_ResetButton_Aria_Label')}
+                    className="ml-2 btn btn-error btn-square flex sm:hidden"
+                    onClick={() => setIsAbortDialogOpen(true)}
+                >
+                    <RefreshIcon className="h-6 w-6" />
+                </button>
             </div>
         </div>
     );
