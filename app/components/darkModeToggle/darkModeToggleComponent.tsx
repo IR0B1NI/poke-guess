@@ -1,4 +1,5 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/solid';
+import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 /**
@@ -7,6 +8,9 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
  * @returns {FunctionComponent} The dark mode toggle component.
  */
 const DarkModeToggle: FunctionComponent = () => {
+    /** Access to translations. */
+    const { t } = useTranslation();
+
     /** Whether the dark mode is enabled or not. */
     const [darkModeEnabled, setIsDarkModeEnabled] = useState<boolean>(false);
 
@@ -43,6 +47,7 @@ const DarkModeToggle: FunctionComponent = () => {
     return (
         <label className="swap swap-rotate btn btn-circle btn-ghost mb-1">
             <input
+                aria-label={t('DarkModeToggle_Toggle_Aria_Label')}
                 type="checkbox"
                 checked={darkModeEnabled}
                 onChange={(event) => {

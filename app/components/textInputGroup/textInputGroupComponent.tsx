@@ -1,4 +1,5 @@
 import { CheckCircleIcon } from '@heroicons/react/outline';
+import { useTranslation } from 'next-i18next';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 
 import TextField from '../textField';
@@ -19,6 +20,9 @@ export interface ITextInputGroupProps {
  * @returns {FunctionComponent} The text input group component.
  */
 const TextInputGroup: FunctionComponent<ITextInputGroupProps> = (props) => {
+    /** Access to translations. */
+    const { t } = useTranslation();
+
     /** The current text value in the text field. */
     const [value, setValue] = useState<string>('');
 
@@ -62,7 +66,7 @@ const TextInputGroup: FunctionComponent<ITextInputGroupProps> = (props) => {
     return (
         <div className="input-group">
             <TextField placeholder={props.placeholder} value={value} onChange={onValueChange} onKeyDown={onKeyDown} />
-            <button className="btn btn-square" onClick={submitValue}>
+            <button aria-label={t('TextInputGroup_Button_Aria_Label')} className="btn btn-square" onClick={submitValue}>
                 <CheckCircleIcon className="h-6 w-6" />
             </button>
         </div>

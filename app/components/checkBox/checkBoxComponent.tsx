@@ -11,6 +11,8 @@ export interface ICheckBoxProps {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     /** Whether the checkbox is currently disabled or not. */
     disabled?: boolean;
+    /** The aria label to set for accessibility. */
+    ariaLabel: string;
 }
 
 /**
@@ -23,6 +25,7 @@ const CheckBox: FunctionComponent<ICheckBoxProps> = (props) => {
     return (
         <div className="flex max-w-max items-center">
             <input
+                aria-label={props.ariaLabel}
                 type="checkbox"
                 disabled={props.disabled}
                 className="flex justify-center items-center w-6 h-6 rounded-full checkbox"

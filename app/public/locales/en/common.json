@@ -9,5 +9,10 @@
     "Pokemon_ResetDialog_Headline": "Reset Game",
     "Pokemon_ResetDialog_Text": "Sure you want to throw away your progress?",
     "Pokemon_ResetDialog_Confirm": "YES, DO IT!",
-    "Pokemon_ResetDialog_Abort": "Ney"
+    "Pokemon_ResetDialog_Abort": "Ney",
+    "TextInputGroup_Button_Aria_Label": "Submit input",
+    "PokemonGameMenu_ResetDialog_Confirm_Aria_Label": "Confirm to reset the game",
+    "PokemonGameMenu_ResetDialog_Abort_Aria_Label": "Do not reset the game",
+    "PokemonGameMenu_ResetButton_Aria_Label": "Reset the game",
+    "DarkModeToggle_Toggle_Aria_Label": "Toggle between light and dark mode"
 }

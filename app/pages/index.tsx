@@ -310,6 +310,7 @@ const Home: NextPage = () => {
                                 Array.from(generations.keys()).map((generationName, i) => (
                                     <div key={`generation-${i}`} className="flex p-4 justify-center items-center min-w-max">
                                         <CheckBox
+                                            ariaLabel={generationName}
                                             disabled={isBusy}
                                             value={generationName}
                                             text={generationName}

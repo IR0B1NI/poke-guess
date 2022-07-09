@@ -37,6 +37,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                     <div className="mt-7">{t('Pokemon_ResetDialog_Text')}</div>
                     <div className="flex justify-end items-center mt-auto">
                         <DefaultButton
+                            ariaLabel={t('PokemonGameMenu_ResetDialog_Confirm_Aria_Label')}
                             className="btn-warning mr-7"
                             text={t('Pokemon_ResetDialog_Confirm')}
                             onClick={() => {
@@ -46,7 +47,11 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                                 setIsAbortDialogOpen(false);
                             }}
                         />
-                        <DefaultButton text={t('Pokemon_ResetDialog_Abort')} onClick={() => setIsAbortDialogOpen(false)} />
+                        <DefaultButton
+                            ariaLabel={t('PokemonGameMenu_ResetDialog_Abort_Aria_Label')}
+                            text={t('Pokemon_ResetDialog_Abort')}
+                            onClick={() => setIsAbortDialogOpen(false)}
+                        />
                     </div>
                 </div>
             )}
@@ -58,7 +63,12 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                 {props.currentScore} / {props.maxScore}
             </div>
             <div className="flex w-full mt-16">
-                <PrimaryButton text={t('Pokemon_ResetButton_Text')} onClick={() => setIsAbortDialogOpen(true)} className="min-w-full" />
+                <PrimaryButton
+                    ariaLabel={t('PokemonGameMenu_ResetButton_Aria_Label')}
+                    text={t('Pokemon_ResetButton_Text')}
+                    onClick={() => setIsAbortDialogOpen(true)}
+                    className="min-w-full"
+                />
             </div>
         </div>
     );

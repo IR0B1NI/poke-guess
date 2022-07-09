@@ -9,5 +9,10 @@
     "Pokemon_ResetDialog_Headline": "Spiel zurücksetzen",
     "Pokemon_ResetDialog_Text": "Sicher, dass du deinen Fortschritt wegwerfen willst?",
     "Pokemon_ResetDialog_Confirm": "JA, ABFAHRT!",
-    "Pokemon_ResetDialog_Abort": "Ney"
+    "Pokemon_ResetDialog_Abort": "Ney",
+    "TextInputGroup_Button_Aria_Label": "Eingabe bestätigen",
+    "PokemonGameMenu_ResetDialog_Confirm_Aria_Label": "Zurücksetzen des Spiels bestätigen",
+    "PokemonGameMenu_ResetDialog_Abort_Aria_Label": "Spiel nicht zurücksetzen",
+    "PokemonGameMenu_ResetButton_Aria_Label": "Spiel zurücksetzen",
+    "DarkModeToggle_Toggle_Aria_Label": "Wechseln zwischen hellem und dunklem Design"
 }

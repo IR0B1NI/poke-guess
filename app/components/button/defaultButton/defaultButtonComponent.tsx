@@ -7,6 +7,8 @@ export interface IDefaultButtonProps {
     onClick?: () => void;
     /** The optional class names to apply. */
     className?: string;
+    /** The aria label to set for accessibility. */
+    ariaLabel: string;
 }
 
 /**
@@ -17,7 +19,7 @@ export interface IDefaultButtonProps {
  */
 const DefaultButton: FunctionComponent<IDefaultButtonProps> = (props) => {
     return (
-        <button className={`btn ${props.className && props.className}`} onClick={props.onClick}>
+        <button aria-label={props.ariaLabel} className={`btn ${props.className && props.className}`} onClick={props.onClick}>
             {props.text}
         </button>
     );
