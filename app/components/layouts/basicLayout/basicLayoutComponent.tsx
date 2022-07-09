@@ -17,7 +17,7 @@ const BasicLayout: FunctionComponent<IBasicLayoutProps> = (props) => {
     return (
         <div className="flex flex-1 flex-col max-h-screen overflow-hidden">
             <TopMenu />
-            <div className="flex flex-1 flex-col bg-gray-50 overflow-hidden">{props.children}</div>
+            <div className="flex flex-1 flex-col overflow-hidden">{props.children}</div>
         </div>
     );
 };

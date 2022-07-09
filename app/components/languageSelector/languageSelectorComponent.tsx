@@ -7,7 +7,7 @@ import React, { FunctionComponent } from 'react';
 /**
  * The icon to use for the language selection opening button.
  */
-const icon = <TranslateIcon className="h-5 w-5 text-black" />;
+const icon = <TranslateIcon className="h-5 w-5" />;
 
 /**
  * Component to select and switch the application display language.
@@ -29,7 +29,7 @@ const LanguageSelector: FunctionComponent = () => {
                 <li className={`${i18n.language === 'en' && 'disabled'}`}>
                     {i18n.language !== 'en' ? (
                         <Link href={router.asPath} locale={'en'}>
-                            <a aria-label={t('Language_Button_En_Aria_Label')} className="p-3 flex justify-center active:bg-black">
+                            <a aria-label={t('Language_Button_En_Aria_Label')} className="p-3 flex justify-center">
                                 {t('Language_Option_En')}
                             </a>
                         </Link>
@@ -40,7 +40,7 @@ const LanguageSelector: FunctionComponent = () => {
                 <li className={`${i18n.language === 'de' && 'disabled'}`}>
                     {i18n.language !== 'de' ? (
                         <Link href={router.asPath} locale={'de'}>
-                            <a aria-label={t('Language_Button_De_Aria_Label')} className="p-3 flex justify-center active:bg-black">
+                            <a aria-label={t('Language_Button_De_Aria_Label')} className="p-3 flex justify-center">
                                 {t('Language_Option_De')}
                             </a>
                         </Link>

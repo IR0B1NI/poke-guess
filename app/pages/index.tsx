@@ -334,7 +334,7 @@ const Home: NextPage = () => {
                             <div>{isBusy && 'Loading ...'}</div>
                         </div>
                         <div className="flex flex-1 relative overflow-hidden">
-                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-black border-t-2 overflow-y-auto z-10">
+                            <div className="flex flex-1 overflow-x-hidden mx-12 px-12 border-t-2 overflow-y-auto z-10">
                                 <div className="flex flex-col max-w-max">
                                     <div className="min-h-content p-3">
                                         {pokemonToFind.map((p, i) => (

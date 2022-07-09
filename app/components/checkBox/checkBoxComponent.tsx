@@ -25,7 +25,7 @@ const CheckBox: FunctionComponent<ICheckBoxProps> = (props) => {
             <input
                 type="checkbox"
                 disabled={props.disabled}
-                className="flex justify-center items-center w-6 h-6 rounded-full border border-black checkbox"
+                className="flex justify-center items-center w-6 h-6 rounded-full checkbox"
                 value={props.value}
                 checked={props.checked}
                 onChange={props.onChange}
