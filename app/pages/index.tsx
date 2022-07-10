@@ -280,23 +280,52 @@ const Home: NextPage = () => {
             setShowAlert(true);
             return;
         }
-        // TODO: Calculate if it is close.
         // Try to find the exact match in the list.
         const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userGuess);
-        if (!pokemon) {
+        if (pokemon) {
+            // The user has found a new pokemon, update the state.
+            const newUserInputState = [...foundPokemon];
+            newUserInputState.push(userInputValue.toLowerCase());
+            setFoundPokemon([...newUserInputState]);
+            setLastGuessedPokemon(pokemon);
+            // Save the progress in the local storage.
+            saveGameState(selectedGenerationNames, newUserInputState);
+            return;
+        }
+        // Find out if the users guess was very close or not.
+        const isClose = pokemonToFind.some((p) => {
+            // Create comparable pokemon name.
+            const pokemonName = p.name.toLocaleLowerCase();
+            // Calculate the difference between pokemon name and user input.
+            const lengthDifference = userGuess.length - pokemonName.length;
+            if (lengthDifference > 1 || lengthDifference < -1) {
+                // If the difference is too big, return false.
+                return false;
+            }
+            let differentCharacters = 0;
+            Array.from(pokemonName).forEach((char, i) => {
+                if (userGuess.charAt(i) !== char) {
+                    differentCharacters++;
+                }
+            });
+            if (differentCharacters > 1) {
+                return false;
+            }
+            return true;
+        });
+        if (isClose) {
+            // If the guess is close, inform the user.
+            setAlertType(AlertType.Warning);
+            setAlertText(t('Alert_PokemonGuess_Close'));
+            setShowAlert(true);
+            return;
+        } else {
             // If the guess is not close, display error.
             setAlertType(AlertType.Error);
             setAlertText(t('Alert_PokemonGuess_Error'));
             setShowAlert(true);
             return;
         }
-        // The user has found a new pokemon, update the state.
-        const newUserInputState = [...foundPokemon];
-        newUserInputState.push(userInputValue.toLowerCase());
-        setFoundPokemon([...newUserInputState]);
-        setLastGuessedPokemon(pokemon);
-        // Save the progress in the local storage.
-        saveGameState(selectedGenerationNames, newUserInputState);
     };
 
     /**
