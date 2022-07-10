@@ -27,9 +27,9 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
     const [isAbortDialogOpen, setIsAbortDialogOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex bg-green-300 p-5 w-full text-black">
+        <div className="flex bg-green-300 p-5 w-full">
             {isAbortDialogOpen && (
-                <div className="card shadow-sm fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-green-300 w-96">
+                <div className="text-black card shadow-sm fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-green-300 w-96">
                     <div className="card-body">
                         <h2 className="card-title">{t('Pokemon_ResetDialog_Headline')}</h2>
                         <p>{t('Pokemon_ResetDialog_Text')}</p>
