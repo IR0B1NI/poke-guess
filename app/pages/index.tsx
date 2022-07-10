@@ -38,6 +38,10 @@ const Home: NextPage = () => {
     const [lastGuessedPokemon, setLastGuessedPokemon] = useState<IPokemon>();
     /** Whether the alert must be shown or not. */
     const [showAlert, setShowAlert] = useState<boolean>(false);
+    /** The current alert type. */
+    const [alertType, setAlertType] = useState<AlertType>(AlertType.Error);
+    /** The alert text. */
+    const [alertText, setAlertText] = useState<string>();
 
     /** The abort controller to use. */
     const abortController = useRef<AbortController>();
@@ -267,20 +271,68 @@ const Home: NextPage = () => {
      * @returns {void} Nothing.
      */
     const handleUserInput = (userInputValue: string) => {
-        // Check if the inserted value is valid.
-        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userInputValue.toLowerCase());
-        const isInputValid = pokemon && !foundPokemon.includes(userInputValue);
-        if (!isInputValid) {
-            // If not, alert the user.
+        // Create a cleaned user input string.
+        const userGuess = userInputValue.toLowerCase().trim();
+        if (hasUserFoundPokemon(userGuess)) {
+            // If the pokemon is already included in the list of found pokemon, inform the user and return.
+            setAlertText(t('Alert_PokemonGuess_AlreadyFound'));
+            setAlertType(AlertType.Info);
             setShowAlert(true);
-        } else {
-            // If yes, update the state.
+            return;
+        }
+        // Try to find the exact match in the list.
+        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userGuess);
+        if (pokemon) {
+            // The user has found a new pokemon, update the state.
             const newUserInputState = [...foundPokemon];
             newUserInputState.push(userInputValue.toLowerCase());
             setFoundPokemon([...newUserInputState]);
             setLastGuessedPokemon(pokemon);
             // Save the progress in the local storage.
             saveGameState(selectedGenerationNames, newUserInputState);
+            // Scroll the new pokemon into the view.
+            const scrollTarget = document.getElementById(`pokemon-${pokemon.id}`);
+            if (scrollTarget) {
+                scrollTarget.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                });
+            }
+            return;
+        }
+        // Find out if the users guess was very close or not.
+        const isClose = pokemonToFind.some((p) => {
+            // Create comparable pokemon name.
+            const pokemonName = p.name.toLocaleLowerCase();
+            // Calculate the difference between pokemon name and user input.
+            const lengthDifference = userGuess.length - pokemonName.length;
+            if (lengthDifference > 1 || lengthDifference < -1) {
+                // If the difference is too big, return false.
+                return false;
+            }
+            let differentCharacters = 0;
+            Array.from(pokemonName).forEach((char, i) => {
+                if (userGuess.charAt(i) !== char) {
+                    differentCharacters++;
+                }
+            });
+            if (differentCharacters > 1) {
+                return false;
+            }
+            return true;
+        });
+        if (isClose) {
+            // If the guess is close, inform the user.
+            setAlertType(AlertType.Warning);
+            setAlertText(t('Alert_PokemonGuess_Close'));
+            setShowAlert(true);
+            return;
+        } else {
+            // If the guess is not close, display error.
+            setAlertType(AlertType.Error);
+            setAlertText(t('Alert_PokemonGuess_Error'));
+            setShowAlert(true);
+            return;
         }
     };
 
@@ -297,7 +349,7 @@ const Home: NextPage = () => {
 
     return (
         <BasicLayout>
-            <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
+            <AutoDismissAlert type={alertType} text={alertText ?? ''} show={showAlert} hide={() => setShowAlert(false)} />
             <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-28 sm:mb-0">
                 <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
                 <div className="flex overflow-x-auto min-h-16">
@@ -335,16 +387,40 @@ const Home: NextPage = () => {
                 </div>
                 <div className="flex flex-1 flex-col sm:overflow-y-auto">
                     <div>
-                        {pokemonToFind.map((p, i) => (
-                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
-                        ))}
+                        {pokemonToFind.map((p, i) => {
+                            const hasFoundPokemon = hasUserFoundPokemon(p.name);
+                            return (
+                                <div className="card bg-base-200 shadow-sm m-5 max-w-max" key={`pokemon-${i}`}>
+                                    <div className="card-body">
+                                        <div id={`pokemon-${p.id}`}>{`${p.id}. ${p.name && hasFoundPokemon ? p.name : '?????'}`}</div>
+                                        {hasFoundPokemon && (
+                                            <div>
+                                                <Image
+                                                    height={160}
+                                                    width={160}
+                                                    alt={p.name}
+                                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
                 {lastGuessedPokemon && (
-                    <div className="fixed top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2  bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
-                        <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
-                        <Image height={320} width={320} alt="" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`} />
-                        <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                    <div className="card fixed top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2 bg-base-200 shadow-sm">
+                        <div className="card-body">
+                            <h2 className="card-title">{t('LastGuessedPokemon_Headline')}</h2>
+                            <Image
+                                height={320}
+                                width={320}
+                                alt={lastGuessedPokemon.name}
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
+                            />
+                            <div className="flex justify-center">{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                        </div>
                     </div>
                 )}
             </div>

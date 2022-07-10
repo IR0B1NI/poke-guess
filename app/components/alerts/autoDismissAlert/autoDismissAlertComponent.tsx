@@ -56,8 +56,7 @@ const AutoDismissAlert: FunctionComponent<IAutoDismissAlertProps> = (props) => {
         }
         return className;
     }, [props.type]);
-
-    return props.show ? <div className={`alert ${alertTypeClass} shadow-lg fixed top-4 w-10/12 z-50 translate-x-1/2 right-1/2`}>{props.text}</div> : <></>;
+    return props.show ? <div className={`alert ${alertTypeClass} shadow-lg fixed top-4 w-9/12 z-50 translate-x-1/2 right-1/2`}>{props.text}</div> : <></>;
 };
 
 export default AutoDismissAlert;

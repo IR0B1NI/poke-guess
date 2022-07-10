@@ -14,5 +14,8 @@
     "PokemonGameMenu_ResetDialog_Confirm_Aria_Label": "Confirm to reset the game",
     "PokemonGameMenu_ResetDialog_Abort_Aria_Label": "Do not reset the game",
     "PokemonGameMenu_ResetButton_Aria_Label": "Reset the game",
-    "DarkModeToggle_Toggle_Aria_Label": "Toggle between light and dark mode"
+    "DarkModeToggle_Toggle_Aria_Label": "Toggle between light and dark mode",
+    "Alert_PokemonGuess_Error": "Nope ...",
+    "Alert_PokemonGuess_AlreadyFound": "This Pokemon is already found.",
+    "Alert_PokemonGuess_Close": "Very close, you almost found one!"
 }
