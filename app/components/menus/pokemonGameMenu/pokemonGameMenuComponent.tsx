@@ -27,28 +27,31 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
     const [isAbortDialogOpen, setIsAbortDialogOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex bg-green-300 p-5 w-full">
+        <div className="flex bg-green-300 p-5 w-full text-black">
             {isAbortDialogOpen && (
-                <div className="flex rounded-lg shadow-sm flex-col p-4 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-green-300 w-96 h-52">
-                    <h4>{t('Pokemon_ResetDialog_Headline')}</h4>
-                    <div className="mt-7">{t('Pokemon_ResetDialog_Text')}</div>
-                    <div className="flex justify-end items-center mt-auto">
-                        <DefaultButton
-                            ariaLabel={t('PokemonGameMenu_ResetDialog_Confirm_Aria_Label')}
-                            className="btn-error mr-7"
-                            text={t('Pokemon_ResetDialog_Confirm')}
-                            onClick={() => {
-                                if (props.resetGame) {
-                                    props.resetGame();
-                                }
-                                setIsAbortDialogOpen(false);
-                            }}
-                        />
-                        <DefaultButton
-                            ariaLabel={t('PokemonGameMenu_ResetDialog_Abort_Aria_Label')}
-                            text={t('Pokemon_ResetDialog_Abort')}
-                            onClick={() => setIsAbortDialogOpen(false)}
-                        />
+                <div className="card shadow-sm fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-green-300 w-96">
+                    <div className="card-body">
+                        <h2 className="card-title">{t('Pokemon_ResetDialog_Headline')}</h2>
+                        <p>{t('Pokemon_ResetDialog_Text')}</p>
+                        <div className="card-actions justify-end mt-7">
+                            <DefaultButton
+                                ariaLabel={t('PokemonGameMenu_ResetDialog_Confirm_Aria_Label')}
+                                className="btn-error mr-7"
+                                text={t('Pokemon_ResetDialog_Confirm')}
+                                onClick={() => {
+                                    if (props.resetGame) {
+                                        props.resetGame();
+                                    }
+                                    setIsAbortDialogOpen(false);
+                                }}
+                            />
+                            <DefaultButton
+                                ariaLabel={t('PokemonGameMenu_ResetDialog_Abort_Aria_Label')}
+                                text={t('Pokemon_ResetDialog_Abort')}
+                                onClick={() => setIsAbortDialogOpen(false)}
+                                className="text-white"
+                            />
+                        </div>
                     </div>
                 </div>
             )}
