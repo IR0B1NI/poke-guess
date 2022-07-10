@@ -341,10 +341,17 @@ const Home: NextPage = () => {
                     </div>
                 </div>
                 {lastGuessedPokemon && (
-                    <div className="fixed top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2  bg-gray-200 dark:bg-base-200 rounded-lg shadow-sm p-4">
-                        <h3 className="underline">{t('LastGuessedPokemon_Headline')}</h3>
-                        <Image height={320} width={320} alt="" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`} />
-                        <div>{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                    <div className="card fixed top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2 bg-base-200 shadow-sm">
+                        <div className="card-body">
+                            <h2 className="card-title">{t('LastGuessedPokemon_Headline')}</h2>
+                            <Image
+                                height={320}
+                                width={320}
+                                alt={lastGuessedPokemon.name}
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${lastGuessedPokemon.id}.png`}
+                            />
+                            <div className="flex justify-center">{`${lastGuessedPokemon.id}. ${lastGuessedPokemon.name}`}</div>
+                        </div>
                     </div>
                 )}
             </div>
