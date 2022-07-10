@@ -14,5 +14,7 @@
     "PokemonGameMenu_ResetDialog_Confirm_Aria_Label": "Zurücksetzen des Spiels bestätigen",
     "PokemonGameMenu_ResetDialog_Abort_Aria_Label": "Spiel nicht zurücksetzen",
     "PokemonGameMenu_ResetButton_Aria_Label": "Spiel zurücksetzen",
-    "DarkModeToggle_Toggle_Aria_Label": "Wechseln zwischen hellem und dunklem Design"
+    "DarkModeToggle_Toggle_Aria_Label": "Wechseln zwischen hellem und dunklem Design",
+    "Alert_PokemonGuess_Error": "Nope ...",
+    "Alert_PokemonGuess_AlreadyFound": "Dieses Pokemon wurde bereits gefunden."
 }

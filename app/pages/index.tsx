@@ -275,7 +275,7 @@ const Home: NextPage = () => {
         const userGuess = userInputValue.toLowerCase().trim();
         if (hasUserFoundPokemon(userGuess)) {
             // If the pokemon is already included in the list of found pokemon, inform the user and return.
-            setAlertText('Already found!');
+            setAlertText(t('Alert_PokemonGuess_AlreadyFound'));
             setAlertType(AlertType.Info);
             setShowAlert(true);
             return;
@@ -286,7 +286,7 @@ const Home: NextPage = () => {
         if (!pokemon) {
             // If the guess is not close, display error.
             setAlertType(AlertType.Error);
-            setAlertText('Nope ...');
+            setAlertText(t('Alert_PokemonGuess_Error'));
             setShowAlert(true);
             return;
         }
