@@ -268,7 +268,7 @@ const Home: NextPage = () => {
      */
     const handleUserInput = (userInputValue: string) => {
         // Check if the inserted value is valid.
-        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userInputValue.toLowerCase());
+        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userInputValue.toLowerCase().trim());
         const isInputValid = pokemon && !foundPokemon.includes(userInputValue);
         if (!isInputValid) {
             // If not, alert the user.
