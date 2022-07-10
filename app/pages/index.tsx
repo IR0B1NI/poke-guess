@@ -290,6 +290,14 @@ const Home: NextPage = () => {
             setLastGuessedPokemon(pokemon);
             // Save the progress in the local storage.
             saveGameState(selectedGenerationNames, newUserInputState);
+            // Scroll the new pokemon into the view.
+            const scrollTarget = document.getElementById(`pokemon-${pokemon.id}`);
+            if (scrollTarget) {
+                scrollTarget.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                });
+            }
             return;
         }
         // Find out if the users guess was very close or not.
@@ -379,9 +387,26 @@ const Home: NextPage = () => {
                 </div>
                 <div className="flex flex-1 flex-col sm:overflow-y-auto">
                     <div>
-                        {pokemonToFind.map((p, i) => (
-                            <div className="min-w-max px-8 py-3" key={`pokemon-${i}`}>{`${p.id}. ${p.name && hasUserFoundPokemon(p.name) ? p.name : '?????'}`}</div>
-                        ))}
+                        {pokemonToFind.map((p, i) => {
+                            const hasFoundPokemon = hasUserFoundPokemon(p.name);
+                            return (
+                                <div className="card bg-base-200 shadow-sm m-5 max-w-max" key={`pokemon-${i}`}>
+                                    <div className="card-body">
+                                        <div id={`pokemon-${p.id}`}>{`${p.id}. ${p.name && hasFoundPokemon ? p.name : '?????'}`}</div>
+                                        {hasFoundPokemon && (
+                                            <div>
+                                                <Image
+                                                    height={160}
+                                                    width={160}
+                                                    alt={p.name}
+                                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
                 {lastGuessedPokemon && (
