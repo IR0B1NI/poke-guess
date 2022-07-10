@@ -38,6 +38,10 @@ const Home: NextPage = () => {
     const [lastGuessedPokemon, setLastGuessedPokemon] = useState<IPokemon>();
     /** Whether the alert must be shown or not. */
     const [showAlert, setShowAlert] = useState<boolean>(false);
+    /** The current alert type. */
+    const [alertType, setAlertType] = useState<AlertType>(AlertType.Error);
+    /** The alert text. */
+    const [alertText, setAlertText] = useState<string>();
 
     /** The abort controller to use. */
     const abortController = useRef<AbortController>();
@@ -267,21 +271,32 @@ const Home: NextPage = () => {
      * @returns {void} Nothing.
      */
     const handleUserInput = (userInputValue: string) => {
-        // Check if the inserted value is valid.
-        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userInputValue.toLowerCase().trim());
-        const isInputValid = pokemon && !foundPokemon.includes(userInputValue);
-        if (!isInputValid) {
-            // If not, alert the user.
+        // Create a cleaned user input string.
+        const userGuess = userInputValue.toLowerCase().trim();
+        if (hasUserFoundPokemon(userGuess)) {
+            // If the pokemon is already included in the list of found pokemon, inform the user and return.
+            setAlertText('Already found!');
+            setAlertType(AlertType.Info);
             setShowAlert(true);
-        } else {
-            // If yes, update the state.
-            const newUserInputState = [...foundPokemon];
-            newUserInputState.push(userInputValue.toLowerCase());
-            setFoundPokemon([...newUserInputState]);
-            setLastGuessedPokemon(pokemon);
-            // Save the progress in the local storage.
-            saveGameState(selectedGenerationNames, newUserInputState);
+            return;
         }
+        // TODO: Calculate if it is close.
+        // Try to find the exact match in the list.
+        const pokemon = pokemonToFind.find((p) => p.name.toLowerCase() === userGuess);
+        if (!pokemon) {
+            // If the guess is not close, display error.
+            setAlertType(AlertType.Error);
+            setAlertText('Nope ...');
+            setShowAlert(true);
+            return;
+        }
+        // The user has found a new pokemon, update the state.
+        const newUserInputState = [...foundPokemon];
+        newUserInputState.push(userInputValue.toLowerCase());
+        setFoundPokemon([...newUserInputState]);
+        setLastGuessedPokemon(pokemon);
+        // Save the progress in the local storage.
+        saveGameState(selectedGenerationNames, newUserInputState);
     };
 
     /**
@@ -297,7 +312,7 @@ const Home: NextPage = () => {
 
     return (
         <BasicLayout>
-            <AutoDismissAlert type={AlertType.Error} text="Nope ..." show={showAlert} hide={() => setShowAlert(false)} />
+            <AutoDismissAlert type={alertType} text={alertText ?? ''} show={showAlert} hide={() => setShowAlert(false)} />
             <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-28 sm:mb-0">
                 <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
                 <div className="flex overflow-x-auto min-h-16">
