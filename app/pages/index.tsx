@@ -285,7 +285,7 @@ const Home: NextPage = () => {
         if (pokemon) {
             // The user has found a new pokemon, update the state.
             const newUserInputState = [...foundPokemon];
-            newUserInputState.push(userInputValue.toLowerCase());
+            newUserInputState.push(userGuess);
             setFoundPokemon([...newUserInputState]);
             setLastGuessedPokemon(pokemon);
             // Save the progress in the local storage.
