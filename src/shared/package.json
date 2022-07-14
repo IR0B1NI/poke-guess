@@ -1,15 +1,32 @@
 {
-  "name": "poke-guess-shared",
-  "version": "1.0.0",
-  "description": "The shared code between the Poke-Guess UI projects.",
-  "private": false,
-  "license": "MIT",
-  "main": "lib/index.js",
-  "types": "lib",
-  "scripts": {
-    "build": "tsc --project ."
-  },
-  "devDependencies": {
-    "typescript": "^4.7.4"
-  }
+    "name": "poke-guess-shared",
+    "version": "1.0.0",
+    "description": "The shared code between the Poke-Guess UI projects.",
+    "private": false,
+    "license": "MIT",
+    "main": "lib/index.js",
+    "types": "lib",
+    "scripts": {
+        "build": "yarn && tsc --project .",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "eslint-plugin-jsdoc": "^39.3.2",
+        "react": "^18.1.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.12",
+        "eslint": "8.17.0",
+        "eslint-config-next": "12.1.6",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-react-app": "^7.0.0",
+        "eslint-plugin-flowtype": "^8.0.3",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react-hooks": "^4.5.0",
+        "eslint-plugin-simple-import-sort": "^7.0.0",
+        "typescript": "^4.7.4"
+    }
 }
