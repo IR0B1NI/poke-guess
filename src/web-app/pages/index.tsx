@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { AlertType } from 'poke-guess-shared';
-import { IPokemon } from 'poke-guess-shared';
-import { IPokemonApiCache } from 'poke-guess-shared';
-import { IPokemonGameSave } from 'poke-guess-shared';
-import { IPokemonGeneration } from 'poke-guess-shared';
+import { IPokemonGameSave } from 'poke-guess-shared/types';
+import { IPokemon } from 'poke-guess-shared/types';
+import { IPokemonApiCache } from 'poke-guess-shared/types';
+import { IPokemonGeneration } from 'poke-guess-shared/types';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
