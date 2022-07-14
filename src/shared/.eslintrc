@@ -1,0 +1,36 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["prettier", "@typescript-eslint", "react", "jsdoc", "simple-import-sort", "import"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended", "plugin:jsdoc/recommended", "prettier"],
+    "env": { "browser": true },
+    "rules": {
+        "indent": [1, 4, { "SwitchCase": 1 }],
+        "max-len": [1, { "code": 180 }],
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"],
+        "array-func/prefer-array-from": "off",
+        "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/destructuring-assignment": "off",
+        "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": "off",
+        "react/state-in-constructor": ["error", "never"],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error"
+    },
+    "settings": {
+        "import/resolver": "webpack",
+        "react": {
+            "createClass": "createReactClass",
+            "pragma": "React",
+            "fragment": "Fragment",
+            "version": "detect"
+        }
+    },
+    "ignorePatterns": ["*.png", "*.svg"]
+}
