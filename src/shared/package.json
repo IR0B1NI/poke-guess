@@ -4,7 +4,11 @@
   "description": "The shared code between the Poke-Guess UI projects.",
   "private": false,
   "license": "MIT",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "types": "lib",
+  "scripts": {
+    "build": "tsc -p ."
+  },
   "devDependencies": {
     "typescript": "^4.7.4"
   }

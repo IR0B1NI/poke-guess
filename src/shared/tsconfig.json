@@ -2,6 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "target": "es5",
+        "outDir": "lib",
         "lib": ["esnext"],
         "allowJs": true,
         "declaration": true,
@@ -21,6 +22,6 @@
         "removeComments": false,
         "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "include": ["src"],
     "exclude": ["node_modules"]
 }
