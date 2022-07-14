@@ -32,5 +32,5 @@
             "version": "detect"
         }
     },
-    "ignorePatterns": ["*.png", "*.svg"]
+    "ignorePatterns": ["*.png", "*.svg", "**/lib/**"]
 }
