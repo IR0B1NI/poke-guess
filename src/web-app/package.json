@@ -1,5 +1,7 @@
 {
     "name": "poke-guess-web",
+    "version": "1.0.0",
+    "description": "The Poke-Guess web UI application.",
     "private": false,
     "license": "MIT",
     "scripts": {
