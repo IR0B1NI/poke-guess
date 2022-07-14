@@ -7,7 +7,7 @@
   "main": "lib/index.js",
   "types": "lib",
   "scripts": {
-    "build": "tsc -p ."
+    "build": "tsc --project ."
   },
   "devDependencies": {
     "typescript": "^4.7.4"
