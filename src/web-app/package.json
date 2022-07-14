@@ -6,7 +6,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "yarn && yarn build-shared && next build",
+        "build-shared": "yarn --cwd ../shared run build",
         "start": "next start",
         "lint": "eslint ."
     },
