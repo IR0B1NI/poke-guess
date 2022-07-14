@@ -2,6 +2,11 @@ import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { AlertType } from 'poke-guess-shared';
+import { IPokemon } from 'poke-guess-shared';
+import { IPokemonApiCache } from 'poke-guess-shared';
+import { IPokemonGameSave } from 'poke-guess-shared';
+import { IPokemonGeneration } from 'poke-guess-shared';
 import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -9,11 +14,6 @@ import AutoDismissAlert from '../components/alerts/autoDismissAlert';
 import CheckBox from '../components/checkBox';
 import BasicLayout from '../components/layouts/basicLayout';
 import PokemonGameMenu from '../components/menus/pokemonGameMenu';
-import { AlertType } from '../types/AlertType';
-import { IPokemon } from '../types/IPokemon';
-import { IPokemonApiCache } from '../types/IPokemonApiCache';
-import { IPokemonGameSave } from '../types/IPokemonGameSave';
-import { IPokemonGeneration } from '../types/IPokemonGeneration';
 
 /**
  * The page component to render at "/".
