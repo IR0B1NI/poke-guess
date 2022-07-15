@@ -2,12 +2,12 @@ import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { AlertType } from 'poke-guess-shared';
+import { AlertType, calculateScore, fetchPokemonGenerations } from 'poke-guess-shared';
 import { IPokemonGameSave } from 'poke-guess-shared';
 import { IPokemon } from 'poke-guess-shared';
 import { IPokemonApiCache } from 'poke-guess-shared';
 import { IPokemonGeneration } from 'poke-guess-shared';
-import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
+import Pokedex, { Generation } from 'pokedex-promise-v2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import AutoDismissAlert from '../components/alerts/autoDismissAlert';
@@ -63,19 +63,6 @@ const Home: NextPage = () => {
         }
         const cachedPokeApiData = JSON.parse(cachedPokeApiDataString) as IPokemonApiCache;
         return cachedPokeApiData;
-    };
-
-    /**
-     * Fetch the list of available pokemon generations.
-     *
-     * @returns {Promise<IPokemonGeneration[]>} The list of available pokemon generations.
-     */
-    const fetchPokemonGenerations = async (): Promise<IPokemonGeneration[]> => {
-        // If the cache has no data create pokedex instance.
-        const P = new Pokedex();
-        // Query all available generations.
-        const result = (await P.getGenerationsList()) as NamedAPIResourceList;
-        return result.results as IPokemonGeneration[];
     };
 
     /**
@@ -336,22 +323,13 @@ const Home: NextPage = () => {
         }
     };
 
-    /**
-     * Determine the current user score by calculation the number of guessed pokemon names
-     * that are present in the list of pokemons that needs to be guessed.
-     *
-     * @returns {number} The number of successfully guessed pokemon.
-     */
-    const calculateScore = (): number => {
-        const result = pokemonToFind.filter((p) => foundPokemon.findIndex((fp) => fp.toLowerCase() === p.name.toLowerCase()) !== -1);
-        return result.length;
-    };
-
     return (
         <BasicLayout>
             <AutoDismissAlert type={alertType} text={alertText ?? ''} show={showAlert} hide={() => setShowAlert(false)} />
             <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-28 sm:mb-0">
-                <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
+                <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore(pokemonToFind, foundPokemon)} / ${
+                    pokemonToFind.length
+                }`}</div>
                 <div className="flex overflow-x-auto min-h-16">
                     {generations?.keys &&
                         Array.from(generations.keys()).map((generationName, i) => (

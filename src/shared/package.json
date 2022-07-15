@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "eslint-plugin-jsdoc": "^39.3.2",
+        "pokedex-promise-v2": "^4.0.0",
         "react": "^18.1.0"
     },
     "devDependencies": {
