@@ -1,3 +1,3 @@
-import { fetchPokemonGenerations } from './pokeApiHelper';
+import { fetchPokemonGenerations, getPokemonForGeneration } from './pokeApiHelper';
 
-export { fetchPokemonGenerations };
+export { fetchPokemonGenerations, getPokemonForGeneration };
