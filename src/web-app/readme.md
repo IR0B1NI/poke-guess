@@ -2,6 +2,8 @@
 
 # poke-guess-web
 
+## 🗒 About
+
 This package contains web application version of the poke-guess game.
 
 ## 🛠 Installation Steps

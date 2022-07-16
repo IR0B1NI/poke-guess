@@ -1,10 +1,10 @@
 # poke-guess
 
-## About
+## 🗒  About
 
 This is a small Pokemon quiz game that uses the [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) package for it's data.
 
-## Packages
+## 📦 Packages
 
 This project is divided in several packages.
 

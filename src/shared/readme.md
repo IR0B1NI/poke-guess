@@ -2,6 +2,8 @@
 
 # poke-guess-shared
 
+## 🗒 About
+
 This package contains `enums`, `types` and `helper` collections that are shared between all other poke-guess packages.
 
 ## 🛠 Installation Steps
