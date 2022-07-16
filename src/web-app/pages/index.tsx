@@ -14,6 +14,7 @@ import {
     IPokemonGeneration,
     pokeApiDataCacheKey,
     saveStoreKey,
+    storeJson,
 } from 'poke-guess-shared';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -101,7 +102,7 @@ const Home: NextPage = () => {
                 tmpCacheModel.generations.push(genToAdd);
             }
             // Update the cache in the local storage.
-            localStorage.setItem(pokeApiDataCacheKey, JSON.stringify(tmpCacheModel));
+            storeJson(pokeApiDataCacheKey, tmpCacheModel, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
         }
         return result;
     }, []);
@@ -117,7 +118,7 @@ const Home: NextPage = () => {
             generationNames: generationNames,
             foundPokemonNames: foundPokemonNames,
         };
-        localStorage.setItem(saveStoreKey, JSON.stringify(save));
+        storeJson(saveStoreKey, save, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
     };
 
     /**
@@ -128,7 +129,7 @@ const Home: NextPage = () => {
             generationNames: [],
             foundPokemonNames: [],
         };
-        localStorage.setItem(saveStoreKey, JSON.stringify(save));
+        storeJson(saveStoreKey, save, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
         setFoundPokemon([]);
         setSelectedGenerationNames([]);
         setLastGuessedPokemon(undefined);
