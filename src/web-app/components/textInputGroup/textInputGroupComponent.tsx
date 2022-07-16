@@ -11,6 +11,8 @@ export interface ITextInputGroupProps {
     placeholder?: string;
     /** The callback to execute on submit. */
     submit: (value: string) => void;
+    /** Whether to disable textfield typing helper or not. */
+    disableAutoHelper?: boolean;
 }
 
 /**
@@ -65,7 +67,7 @@ const TextInputGroup: FunctionComponent<ITextInputGroupProps> = (props) => {
 
     return (
         <div className="input-group">
-            <TextField placeholder={props.placeholder} value={value} onChange={onValueChange} onKeyDown={onKeyDown} />
+            <TextField disableAutoHelper={props.disableAutoHelper} placeholder={props.placeholder} value={value} onChange={onValueChange} onKeyDown={onKeyDown} />
             <button aria-label={t('TextInputGroup_Button_Aria_Label')} className="btn btn-square" onClick={submitValue}>
                 <CheckCircleIcon className="h-6 w-6" />
             </button>
