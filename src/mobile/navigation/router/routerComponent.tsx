@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { useColorScheme } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useTranslations } from '../../helper/localization';
 import colors from '../../theme/colors';
@@ -28,8 +28,8 @@ const Router: FunctionComponent = () => {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            background: isDarkMode ? colors.black : colors.white,
-            card: isDarkMode ? colors.black : colors.white,
+            background: isDarkMode ? colors.backgroundDark : colors.backgroundLight,
+            card: isDarkMode ? colors.navBackgroundDark : colors.navBackgroundLight,
             text: isDarkMode ? colors.white : colors.black,
             primary: colors.primary,
         },
@@ -44,9 +44,9 @@ const Router: FunctionComponent = () => {
      */
     const renderTabBarIcon = (isFocused: boolean, iconName: string) => {
         if (isFocused) {
-            return <Icon name={iconName} color={colors.primary} />;
+            return <Icon size={22} name={iconName} color={colors.primary} />;
         }
-        return <Icon name={iconName} color={isDarkMode ? colors.white : colors.black} />;
+        return <Icon size={22} name={iconName} color={isDarkMode ? colors.white : colors.black} />;
     };
 
     return (
@@ -57,7 +57,7 @@ const Router: FunctionComponent = () => {
                     component={MainScreen}
                     options={{
                         title: translations.gameTitle,
-                        tabBarIcon: (props) => renderTabBarIcon(props.focused, 'game-controller'),
+                        tabBarIcon: (props) => renderTabBarIcon(props.focused, 'nintendo-game-boy'),
                     }}
                 />
             </Tab.Navigator>
