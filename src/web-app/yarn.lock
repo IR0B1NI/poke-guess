@@ -3272,6 +3272,10 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+"poke-guess-shared@link:../shared":
+  version "0.0.0"
+  uid ""
+
 pokedex-promise-v2@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/pokedex-promise-v2/-/pokedex-promise-v2-4.0.0.tgz#f3b97cba39b075f98ba4f1e96bb47811cd48cdc0"

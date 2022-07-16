@@ -56,7 +56,7 @@ const PokemonGameMenu: FunctionComponent<IPokemonGameMenuProps> = (props) => {
                 </div>
             )}
             <div className="flex flex-1">
-                <TextInputGroup placeholder={t('Pokemon_Input_Placeholder')} submit={props.handleUserInput} />
+                <TextInputGroup disableAutoHelper placeholder={t('Pokemon_Input_Placeholder')} submit={props.handleUserInput} />
                 <PrimaryButton
                     ariaLabel={t('PokemonGameMenu_ResetButton_Aria_Label')}
                     text={t('Pokemon_ResetButton_Text')}

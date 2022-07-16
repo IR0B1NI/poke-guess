@@ -11,6 +11,8 @@ export interface ITextFieldProps {
     placeholder?: string;
     /** The optional on key down callback. */
     onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+    /** Whether to disable textfield typing helper or not. */
+    disableAutoHelper?: boolean;
 }
 
 /**
@@ -22,6 +24,9 @@ export interface ITextFieldProps {
 const TextField: FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <input
+            autoCorrect={props.disableAutoHelper ? 'off' : 'on'}
+            autoComplete={props.disableAutoHelper ? 'off' : 'on'}
+            spellCheck={!props.disableAutoHelper}
             className="input w-full"
             readOnly={props.readOnly}
             type="text"

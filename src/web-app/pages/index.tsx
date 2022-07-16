@@ -2,18 +2,17 @@ import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Pokedex, { Generation, NamedAPIResourceList } from 'pokedex-promise-v2';
+import { AlertType, calculateScore, fetchPokemonGenerations, getPokemonForGeneration } from 'poke-guess-shared';
+import { IPokemonGameSave } from 'poke-guess-shared';
+import { IPokemon } from 'poke-guess-shared';
+import { IPokemonApiCache } from 'poke-guess-shared';
+import { IPokemonGeneration } from 'poke-guess-shared';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import AutoDismissAlert from '../components/alerts/autoDismissAlert';
 import CheckBox from '../components/checkBox';
 import BasicLayout from '../components/layouts/basicLayout';
 import PokemonGameMenu from '../components/menus/pokemonGameMenu';
-import { AlertType } from '../types/AlertType';
-import { IPokemon } from '../types/IPokemon';
-import { IPokemonApiCache } from '../types/IPokemonApiCache';
-import { IPokemonGameSave } from '../types/IPokemonGameSave';
-import { IPokemonGeneration } from '../types/IPokemonGeneration';
 
 /**
  * The page component to render at "/".
@@ -66,19 +65,6 @@ const Home: NextPage = () => {
     };
 
     /**
-     * Fetch the list of available pokemon generations.
-     *
-     * @returns {Promise<IPokemonGeneration[]>} The list of available pokemon generations.
-     */
-    const fetchPokemonGenerations = async (): Promise<IPokemonGeneration[]> => {
-        // If the cache has no data create pokedex instance.
-        const P = new Pokedex();
-        // Query all available generations.
-        const result = (await P.getGenerationsList()) as NamedAPIResourceList;
-        return result.results as IPokemonGeneration[];
-    };
-
-    /**
      * Fetch the list of pokemon for a given pokemon generation with a requested language.
      *
      * @param {string} genName The name of the requested pokemon generation.
@@ -94,26 +80,7 @@ const Home: NextPage = () => {
             // If a cached generation is found and it contains the list of pokemon, return the result.
             return cachedGeneration.pokemon[languageKey];
         }
-        // Create pokedex instance.
-        const P = new Pokedex();
-        // Query the generation.
-        const generation = (await P.getGenerationByName(genName)) as Generation;
-        // Retrieve the promises for the desired language pokemon models.
-        const pokemonPromises = generation.pokemon_species.map(async (p) => {
-            const pokemonSpecies = (await P.getPokemonSpeciesByName(p.name)) as Pokedex.PokemonSpecies;
-            const nameForRequestedLanguage = pokemonSpecies.names.filter((pokeAPIName) => pokeAPIName.language.name === languageKey)[0].name;
-            const pokemonModel: IPokemon = {
-                id: pokemonSpecies.id,
-                name: nameForRequestedLanguage,
-            };
-            return pokemonModel;
-        });
-        // Wait for everything to complete.
-        const result = await Promise.all(pokemonPromises).then((result) => {
-            // Order the result.
-            result.sort((a, b) => (a.id < b.id ? -1 : 1));
-            return result;
-        });
+        const result = await getPokemonForGeneration(genName, languageKey);
         if (!cachedGeneration || (cachedGeneration && (!cachedGeneration.pokemon[languageKey] || cachedGeneration.pokemon[languageKey].length <= 0))) {
             // If there is no cache for the current generation, or the cached generation contains no pokemon, fill the cache.
             const tmpCacheModel = { ...cache };
@@ -121,14 +88,14 @@ const Home: NextPage = () => {
                 // If there are no generations ion cache yet, init it.
                 tmpCacheModel.generations = [];
             }
-            const currentGenCache = tmpCacheModel.generations?.find((g) => g.name === generation.name);
+            const currentGenCache = tmpCacheModel.generations?.find((g) => g.name === genName);
             if (currentGenCache) {
                 // If the current gen exists, add the pokemon for the requested language.
                 currentGenCache.pokemon[languageKey] = result;
             } else {
                 // Create gen model to add to cache.
                 const genToAdd: IPokemonGeneration = {
-                    name: generation.name,
+                    name: genName,
                     pokemon: {},
                 };
                 genToAdd.pokemon[languageKey] = result;
@@ -336,22 +303,13 @@ const Home: NextPage = () => {
         }
     };
 
-    /**
-     * Determine the current user score by calculation the number of guessed pokemon names
-     * that are present in the list of pokemons that needs to be guessed.
-     *
-     * @returns {number} The number of successfully guessed pokemon.
-     */
-    const calculateScore = (): number => {
-        const result = pokemonToFind.filter((p) => foundPokemon.findIndex((fp) => fp.toLowerCase() === p.name.toLowerCase()) !== -1);
-        return result.length;
-    };
-
     return (
         <BasicLayout>
             <AutoDismissAlert type={alertType} text={alertText ?? ''} show={showAlert} hide={() => setShowAlert(false)} />
             <div id="content-container" className="flex flex-1 flex-col h-screen sm:overflow-hidden mb-28 sm:mb-0">
-                <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore()} / ${pokemonToFind.length}`}</div>
+                <div className="flex justify-center mt-24 mb-4">{`${t('Pokemon_CurrentProgress_Headline')}: ${calculateScore(pokemonToFind, foundPokemon)} / ${
+                    pokemonToFind.length
+                }`}</div>
                 <div className="flex overflow-x-auto min-h-16">
                     {generations?.keys &&
                         Array.from(generations.keys()).map((generationName, i) => (
