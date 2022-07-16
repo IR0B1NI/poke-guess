@@ -21,7 +21,7 @@ const storeJson = <T>(storageKey: string, item: T, setItem: (key: string, string
  * @param {Function} getItem The platform specific function to retrieve an item from the platform storage.
  * @returns {T | undefined} The retrieved item parsed to the desired type if existent, undefined if not.
  */
-const getFromStorage = <T>(storageKey: string, getItem: (key: string) => string): T | undefined => {
+const getFromStorage = <T>(storageKey: string, getItem: (key: string) => string | null): T | undefined => {
     // Get the item from platform storage using the given storage key.
     const item = getItem(storageKey);
     if (!item) {

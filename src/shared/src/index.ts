@@ -5,6 +5,7 @@ import { calculateScore } from './helper/game';
 import { fetchPokemonGenerations } from './helper/pokeApi';
 import { getPokemonForGeneration } from './helper/pokeApi';
 import { pokeApiDataCacheKey, saveStoreKey } from './helper/storage';
+import { getFromStorage, storeJson } from './helper/storage';
 // Import types.
 import { IPokemon } from './types/IPokemon';
 import { IPokemonApiCache } from './types/IPokemonApiCache';
@@ -18,4 +19,4 @@ export { AlertType };
 // Export constants.
 export { pokeApiDataCacheKey, saveStoreKey };
 // Export functions.
-export { calculateScore, fetchPokemonGenerations, getPokemonForGeneration };
+export { calculateScore, fetchPokemonGenerations, getFromStorage, getPokemonForGeneration, storeJson };

@@ -6,6 +6,7 @@ import {
     AlertType,
     calculateScore,
     fetchPokemonGenerations,
+    getFromStorage,
     getPokemonForGeneration,
     IPokemon,
     IPokemonApiCache,
@@ -58,13 +59,7 @@ const Home: NextPage = () => {
      * @returns {IPokemonApiCache | undefined} The cached poke api data if any exists.
      */
     const getPokeApiDataFromCache = (): IPokemonApiCache | undefined => {
-        // Try to retrieve cached poke api date.
-        const cachedPokeApiDataString = localStorage.getItem(pokeApiDataCacheKey);
-        if (!cachedPokeApiDataString) {
-            return;
-        }
-        const cachedPokeApiData = JSON.parse(cachedPokeApiDataString) as IPokemonApiCache;
-        return cachedPokeApiData;
+        return getFromStorage<IPokemonApiCache>(pokeApiDataCacheKey, (key: string) => localStorage.getItem(key));
     };
 
     /**
@@ -141,13 +136,12 @@ const Home: NextPage = () => {
 
     /** Handle game initialization based on stored save. */
     useEffect(() => {
-        const storedSaveString = localStorage.getItem(saveStoreKey);
-        if (!storedSaveString) {
+        const save = getFromStorage<IPokemonGameSave>(saveStoreKey, (key: string) => localStorage.getItem(key));
+        if (!save) {
             setSelectedGenerationNames([]);
             setFoundPokemon([]);
             return;
         }
-        const save: IPokemonGameSave = JSON.parse(storedSaveString);
         setSelectedGenerationNames(save.generationNames);
         setFoundPokemon(save.foundPokemonNames);
     }, []);
