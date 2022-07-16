@@ -1,3 +1,5 @@
+import { IPokemonGameSave, saveStoreKey } from '../..';
+
 /**
  * Stores an item on the platform specific persistence storage using a defined key.
  *
@@ -34,4 +36,19 @@ const getFromStorage = <T>(storageKey: string, getItem: (key: string) => string 
     return parsedItem;
 };
 
-export { getFromStorage, storeJson };
+/**
+ * Save the current progress of the game.
+ *
+ * @param {string[]} generationNames The names of the selected pokemon generations to use for the current game.
+ * @param {string[]} foundPokemonNames The names of the successfully guessed pokemon.
+ * @param {Function} setItem The platform specific function to store an item on the platform storage.
+ */
+const saveGameState = (generationNames: string[], foundPokemonNames: string[], setItem: (key: string, stringifiedItem: string) => void) => {
+    const save: IPokemonGameSave = {
+        generationNames: generationNames,
+        foundPokemonNames: foundPokemonNames,
+    };
+    storeJson(saveStoreKey, save, setItem);
+};
+
+export { getFromStorage, saveGameState, storeJson };

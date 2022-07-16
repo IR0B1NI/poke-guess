@@ -13,6 +13,7 @@ import {
     IPokemonGameSave,
     IPokemonGeneration,
     pokeApiDataCacheKey,
+    saveGameState,
     saveStoreKey,
     storeJson,
 } from 'poke-guess-shared';
@@ -55,13 +56,30 @@ const Home: NextPage = () => {
     const abortController = useRef<AbortController>();
 
     /**
+     * Wrapper for the get item method of the local browser storage.
+     *
+     * @param {string} key The key to use for local storage access.
+     * @returns {string | null} The stored value or null if non exists.
+     */
+    const getStorageItem = (key: string) => localStorage.getItem(key);
+
+    /**
+     * Wrapper for the set item method of the local browser storage.
+     *
+     * @param {string} key The key to use for local storage access.
+     * @param {string} stringifiedItem The stringified item to store in the local
+     * @returns {void} Nothing.
+     */
+    const storeItemInStorage = (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem);
+
+    /**
      * Get the poke api data cache model from local storage.
      *
      * @returns {IPokemonApiCache | undefined} The cached poke api data if any exists.
      */
-    const getPokeApiDataFromCache = (): IPokemonApiCache | undefined => {
-        return getFromStorage<IPokemonApiCache>(pokeApiDataCacheKey, (key: string) => localStorage.getItem(key));
-    };
+    const getPokeApiDataFromCache = useCallback((): IPokemonApiCache | undefined => {
+        return getFromStorage<IPokemonApiCache>(pokeApiDataCacheKey, getStorageItem);
+    }, []);
 
     /**
      * Fetch the list of pokemon for a given pokemon generation with a requested language.
@@ -70,56 +88,45 @@ const Home: NextPage = () => {
      * @param {string} languageKey The requested language of the pokemon names.
      * @returns {IPokemon[]} The list of pokemon in the requested generation.
      */
-    const fetchPokemon = useCallback(async (genName: string, languageKey: string): Promise<IPokemon[]> => {
-        // Retrieve the poke api data from cache.
-        const cache = getPokeApiDataFromCache();
-        // Check if the cache contains the needed data for the requested generation name.
-        const cachedGeneration = cache?.generations.find((g) => g.name === genName);
-        if (cachedGeneration && cachedGeneration.pokemon[languageKey] && cachedGeneration.pokemon[languageKey].length > 0) {
-            // If a cached generation is found and it contains the list of pokemon, return the result.
-            return cachedGeneration.pokemon[languageKey];
-        }
-        const result = await getPokemonForGeneration(genName, languageKey);
-        if (!cachedGeneration || (cachedGeneration && (!cachedGeneration.pokemon[languageKey] || cachedGeneration.pokemon[languageKey].length <= 0))) {
-            // If there is no cache for the current generation, or the cached generation contains no pokemon, fill the cache.
-            const tmpCacheModel = { ...cache };
-            if (!tmpCacheModel.generations) {
-                // If there are no generations ion cache yet, init it.
-                tmpCacheModel.generations = [];
+    const fetchPokemon = useCallback(
+        async (genName: string, languageKey: string): Promise<IPokemon[]> => {
+            // Retrieve the poke api data from cache.
+            const cache = getPokeApiDataFromCache();
+            // Check if the cache contains the needed data for the requested generation name.
+            const cachedGeneration = cache?.generations.find((g) => g.name === genName);
+            if (cachedGeneration && cachedGeneration.pokemon[languageKey] && cachedGeneration.pokemon[languageKey].length > 0) {
+                // If a cached generation is found and it contains the list of pokemon, return the result.
+                return cachedGeneration.pokemon[languageKey];
             }
-            const currentGenCache = tmpCacheModel.generations?.find((g) => g.name === genName);
-            if (currentGenCache) {
-                // If the current gen exists, add the pokemon for the requested language.
-                currentGenCache.pokemon[languageKey] = result;
-            } else {
-                // Create gen model to add to cache.
-                const genToAdd: IPokemonGeneration = {
-                    name: genName,
-                    pokemon: {},
-                };
-                genToAdd.pokemon[languageKey] = result;
-                // Push new generation model to the cache.
-                tmpCacheModel.generations.push(genToAdd);
+            const result = await getPokemonForGeneration(genName, languageKey);
+            if (!cachedGeneration || (cachedGeneration && (!cachedGeneration.pokemon[languageKey] || cachedGeneration.pokemon[languageKey].length <= 0))) {
+                // If there is no cache for the current generation, or the cached generation contains no pokemon, fill the cache.
+                const tmpCacheModel = { ...cache };
+                if (!tmpCacheModel.generations) {
+                    // If there are no generations ion cache yet, init it.
+                    tmpCacheModel.generations = [];
+                }
+                const currentGenCache = tmpCacheModel.generations?.find((g) => g.name === genName);
+                if (currentGenCache) {
+                    // If the current gen exists, add the pokemon for the requested language.
+                    currentGenCache.pokemon[languageKey] = result;
+                } else {
+                    // Create gen model to add to cache.
+                    const genToAdd: IPokemonGeneration = {
+                        name: genName,
+                        pokemon: {},
+                    };
+                    genToAdd.pokemon[languageKey] = result;
+                    // Push new generation model to the cache.
+                    tmpCacheModel.generations.push(genToAdd);
+                }
+                // Update the cache in the local storage.
+                storeJson(pokeApiDataCacheKey, tmpCacheModel, storeItemInStorage);
             }
-            // Update the cache in the local storage.
-            storeJson(pokeApiDataCacheKey, tmpCacheModel, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
-        }
-        return result;
-    }, []);
-
-    /**
-     * Save the current progress of the game.
-     *
-     * @param {string[]} generationNames The names of the selected pokemon generations to use for the current game.
-     * @param {string[]} foundPokemonNames The names of the successfully guessed pokemon.
-     */
-    const saveGameState = (generationNames: string[], foundPokemonNames: string[]) => {
-        const save: IPokemonGameSave = {
-            generationNames: generationNames,
-            foundPokemonNames: foundPokemonNames,
-        };
-        storeJson(saveStoreKey, save, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
-    };
+            return result;
+        },
+        [getPokeApiDataFromCache]
+    );
 
     /**
      * Reset the current game save in the state and storage.
@@ -129,7 +136,7 @@ const Home: NextPage = () => {
             generationNames: [],
             foundPokemonNames: [],
         };
-        storeJson(saveStoreKey, save, (key: string, stringifiedItem: string) => localStorage.setItem(key, stringifiedItem));
+        storeJson(saveStoreKey, save, storeItemInStorage);
         setFoundPokemon([]);
         setSelectedGenerationNames([]);
         setLastGuessedPokemon(undefined);
@@ -137,7 +144,7 @@ const Home: NextPage = () => {
 
     /** Handle game initialization based on stored save. */
     useEffect(() => {
-        const save = getFromStorage<IPokemonGameSave>(saveStoreKey, (key: string) => localStorage.getItem(key));
+        const save = getFromStorage<IPokemonGameSave>(saveStoreKey, getStorageItem);
         if (!save) {
             setSelectedGenerationNames([]);
             setFoundPokemon([]);
@@ -254,7 +261,7 @@ const Home: NextPage = () => {
             setFoundPokemon([...newUserInputState]);
             setLastGuessedPokemon(pokemon);
             // Save the progress in the local storage.
-            saveGameState(selectedGenerationNames, newUserInputState);
+            saveGameState(selectedGenerationNames, newUserInputState, storeItemInStorage);
             // Scroll the new pokemon into the view.
             const scrollTarget = document.getElementById(`pokemon-${pokemon.id}`);
             if (scrollTarget) {
@@ -325,7 +332,7 @@ const Home: NextPage = () => {
                                             const newState = [...selectedGenerationNames];
                                             newState.push(generationName);
                                             setSelectedGenerationNames([...newState]);
-                                            saveGameState(newState, foundPokemon);
+                                            saveGameState(newState, foundPokemon, storeItemInStorage);
                                         } else {
                                             // Remove from state.
                                             const index = selectedGenerationNames.findIndex((v) => v === generationName);
@@ -333,7 +340,7 @@ const Home: NextPage = () => {
                                                 const newState = [...selectedGenerationNames];
                                                 newState.splice(index, 1);
                                                 setSelectedGenerationNames([...newState]);
-                                                saveGameState(newState, foundPokemon);
+                                                saveGameState(newState, foundPokemon, storeItemInStorage);
                                             }
                                         }
                                     }}

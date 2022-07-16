@@ -1,5 +1,5 @@
 import { pokeApiDataCacheKey, saveStoreKey } from './constants';
-import { getFromStorage, storeJson } from './storageHelper';
+import { getFromStorage, saveGameState, storeJson } from './storageHelper';
 
 export { pokeApiDataCacheKey, saveStoreKey };
-export { getFromStorage, storeJson };
+export { getFromStorage, saveGameState, storeJson };
