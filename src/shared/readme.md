@@ -26,7 +26,7 @@ yarn build
 
 ## 👷‍♀️ Modifying
 
-To add or edit content of this local package you need to make sure to `export` your code to share from `src/index.ts`. To make you changes available you also need to `build` the package again.
+To add or edit content of this local package you need to make sure to `export` your code to share from [src/index.ts](./src/index.ts). To make you changes available you also need to `build` the package again.
 
 ## ⚙️ Build with
 

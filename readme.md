@@ -2,16 +2,18 @@
 
 ## About
 
-This is a small NextJS App that uses the [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) package to use Pokemon data for a quiz game.
+This is a small Pokemon quiz game that uses the [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) package for it's data.
 
-## Testing
+## Packages
 
-To play the game online open this [LINK](https://pokemon.robin-thoene.com/)
+This project is divided in several packages.
 
-To test and play the game locally on your device, perform the following steps:
+| Name                                        | Description                                                                                       |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [poke-guess-shared](./src/shared/readme.md) | Contains code that is shared between the other projects.                                          |
+| [poke-guess-web](./src/web-app/readme.md)   | Contains the code of the web application that is hosted [here](https://pokemon.robin-thoene.com). |
+|                                             |                                                                                                   |
 
-1. Clone this repo
-2. Open a terminal
-3. Navigate into `./src/web-app` folder
-4. Execute `yarn && yarn build`
-5. Execute `yarn start`
+## 🚀 Production Environments
+
+### [🖥 Web App](https://pokemon.robin-thoene.com/)
