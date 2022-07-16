@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Text, View } from 'react-native';
+
+import { LocalizationProvider } from './helper/localization';
+import MainScreen from './screens/mainScreen';
 
 /**
  * Entry point of the mobile application.
@@ -8,9 +10,9 @@ import { Text, View } from 'react-native';
  */
 const App: FunctionComponent = () => {
     return (
-        <View>
-            <Text>Hello World</Text>
-        </View>
+        <LocalizationProvider>
+            <MainScreen />
+        </LocalizationProvider>
     );
 };
 

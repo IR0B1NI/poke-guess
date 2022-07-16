@@ -1,4 +1,3 @@
-import { changeLanguage } from './localizationHelper';
-import translations from './translations';
+import LocalizationProvider from './localizationProvider';
 
-export { changeLanguage, translations };
+export { LocalizationProvider };
