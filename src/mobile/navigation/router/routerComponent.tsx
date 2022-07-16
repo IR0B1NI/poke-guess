@@ -43,10 +43,7 @@ const Router: FunctionComponent = () => {
      * @returns {ReactNode} The icon component.
      */
     const renderTabBarIcon = (isFocused: boolean, iconName: string) => {
-        if (isFocused) {
-            return <Icon size={22} name={iconName} color={colors.primary} />;
-        }
-        return <Icon size={22} name={iconName} color={isDarkMode ? colors.white : colors.black} />;
+        return <Icon size={22} name={iconName} color={isFocused ? colors.primary : isDarkMode ? colors.white : colors.black} />;
     };
 
     return (
