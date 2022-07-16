@@ -1,4 +1,7 @@
 {
-  "name": "mobile",
-  "displayName": "mobile"
+    "name": "Poke Guess",
+    "displayName": "Poke Guess",
+    "android": {
+        "package": "com.robin-thoene.poke-guess"
+    }
 }
