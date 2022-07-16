@@ -132,11 +132,7 @@ const Home: NextPage = () => {
      * Reset the current game save in the state and storage.
      */
     const resetGameState = () => {
-        const save: IPokemonGameSave = {
-            generationNames: [],
-            foundPokemonNames: [],
-        };
-        storeJson(saveStoreKey, save, storeItemInStorage);
+        saveGameState([], [], storeItemInStorage);
         setFoundPokemon([]);
         setSelectedGenerationNames([]);
         setLastGuessedPokemon(undefined);
