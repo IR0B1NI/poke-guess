@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
+import CustomText from '../../components/customText';
 import { useTranslations } from '../../helper/localization/localizationProvider';
 
 /**
@@ -14,7 +15,7 @@ const MainScreen: FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
-            <Text>{translations.welcomeMessage}</Text>
+            <CustomText>{translations.welcomeMessage}</CustomText>
             <Button
                 title="Toggle"
                 onPress={() => {
