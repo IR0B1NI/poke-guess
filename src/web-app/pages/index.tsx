@@ -2,11 +2,18 @@ import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { AlertType, calculateScore, fetchPokemonGenerations, getPokemonForGeneration } from 'poke-guess-shared';
-import { IPokemonGameSave } from 'poke-guess-shared';
-import { IPokemon } from 'poke-guess-shared';
-import { IPokemonApiCache } from 'poke-guess-shared';
-import { IPokemonGeneration } from 'poke-guess-shared';
+import {
+    AlertType,
+    calculateScore,
+    fetchPokemonGenerations,
+    getPokemonForGeneration,
+    IPokemon,
+    IPokemonApiCache,
+    IPokemonGameSave,
+    IPokemonGeneration,
+    pokeApiDataCacheKey,
+    saveStoreKey,
+} from 'poke-guess-shared';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import AutoDismissAlert from '../components/alerts/autoDismissAlert';
@@ -44,10 +51,6 @@ const Home: NextPage = () => {
 
     /** The abort controller to use. */
     const abortController = useRef<AbortController>();
-    /** The name of the key in the local storage to store the current progress. */
-    const saveStoreKey = 'PokemonGameSave';
-    /** The name of the key in the local storage to store the poke api data cache.*/
-    const pokeApiDataCacheKey = 'PokeApiData';
 
     /**
      * Get the poke api data cache model from local storage.
