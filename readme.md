@@ -12,7 +12,6 @@ This project is divided in several packages.
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | [poke-guess-shared](./src/shared/readme.md) | Contains code that is shared between the other projects.                                          |
 | [poke-guess-web](./src/web-app/readme.md)   | Contains the code of the web application that is hosted [here](https://pokemon.robin-thoene.com). |
-|                                             |                                                                                                   |
 
 ## 🚀 Production Environments
 
