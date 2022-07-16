@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
-import CustomText from '../../components/customText';
-import { useTranslations } from '../../helper/localization/localizationProvider';
+import CustomText from '../../../components/customText';
+import { useTranslations } from '../../../helper/localization';
 
 /**
  * Screen component to render the main game screen.

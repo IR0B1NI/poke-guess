@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
-import { LocalizationProvider } from './helper/localization';
-import MainScreen from './screens/mainScreen';
+import LocalizationProvider from './helper/localization';
+import Router from './navigation/router';
 
 /**
  * Entry point of the mobile application.
@@ -11,7 +11,7 @@ import MainScreen from './screens/mainScreen';
 const App: FunctionComponent = () => {
     return (
         <LocalizationProvider>
-            <MainScreen />
+            <Router />
         </LocalizationProvider>
     );
 };

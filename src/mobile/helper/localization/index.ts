@@ -1,3 +1,3 @@
-import LocalizationProvider from './localizationProvider';
+import LocalizationProvider, {useTranslations} from './localizationProvider';
 
-export { LocalizationProvider };
+export { LocalizationProvider as default, useTranslations };
