@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { View } from 'react-native';
 
+import CustomText from '../../../components/customText';
 import { useTranslations } from '../../../helper/localization';
 import { useStoreActions } from '../../../store';
 
@@ -22,7 +23,11 @@ const GameSettingsScreen: FunctionComponent = () => {
         return () => updateIsBottomNavBarHidden(false);
     }, [updateIsBottomNavBarHidden]);
 
-    return <View></View>;
+    return (
+        <View>
+            <CustomText>{translations.gameSettingsTitle}</CustomText>
+        </View>
+    );
 };
 
 export default GameSettingsScreen;
