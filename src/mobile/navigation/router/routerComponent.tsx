@@ -1,16 +1,9 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useColorScheme } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useTranslations } from '../../helper/localization';
 import colors from '../../theme/colors';
-import MainScreen from '../screens/mainScreen';
-import { gameNavKey } from './constants';
-
-// Create bottom tab navigator.
-const Tab = createBottomTabNavigator();
+import MainTabNavigator from '../navigators/mainTabNavigator';
 
 /**
  * The router to navigate between screens inside the application.
@@ -20,8 +13,6 @@ const Tab = createBottomTabNavigator();
 const Router: FunctionComponent = () => {
     /** Whether the dark mode is enabled or not. */
     const isDarkMode = useColorScheme() === 'dark';
-    /** Access to the translations. */
-    const { translations } = useTranslations();
 
     /** Build the app theme. */
     const theme: Theme = {
@@ -35,29 +26,9 @@ const Router: FunctionComponent = () => {
         },
     };
 
-    /**
-     * Render an icon for a tab bar item.
-     *
-     * @param {boolean} isFocused Whether the icon needs to display a focused state or not.
-     * @param {string} iconName The name of the icon.
-     * @returns {ReactNode} The icon component.
-     */
-    const renderTabBarIcon = (isFocused: boolean, iconName: string) => {
-        return <Icon size={22} name={iconName} color={isFocused ? colors.primary : isDarkMode ? colors.white : colors.black} />;
-    };
-
     return (
         <NavigationContainer theme={theme}>
-            <Tab.Navigator initialRouteName={gameNavKey}>
-                <Tab.Screen
-                    name={gameNavKey}
-                    component={MainScreen}
-                    options={{
-                        title: translations.gameTitle,
-                        tabBarIcon: (props) => renderTabBarIcon(props.focused, 'nintendo-game-boy'),
-                    }}
-                />
-            </Tab.Navigator>
+            <MainTabNavigator />
         </NavigationContainer>
     );
 };

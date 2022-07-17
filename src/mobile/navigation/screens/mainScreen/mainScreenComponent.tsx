@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, View } from 'react-native';
 
 import CustomText from '../../../components/customText';
 import { useTranslations } from '../../../helper/localization';
@@ -14,7 +14,7 @@ const MainScreen: FunctionComponent = () => {
     const { translations, changeLanguage } = useTranslations();
 
     return (
-        <View style={styles.container}>
+        <View>
             <CustomText>{translations.welcomeMessage}</CustomText>
             <Button
                 title="Toggle"
@@ -29,14 +29,5 @@ const MainScreen: FunctionComponent = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
 
 export default MainScreen;
