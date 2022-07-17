@@ -13,8 +13,8 @@ import { gameSettingsNavKey } from '../../router';
 const SettingsScreen: FunctionComponent = () => {
     /** Access to the translations. */
     const { translations } = useTranslations();
-
-    const navigation = useNavigation<any>();
+    /** Access to the navigation. */
+    const navigation = useNavigation<{ navigate: (key: string) => void }>();
 
     return (
         <View>

@@ -19,7 +19,12 @@ const SettingsScreenStackNavigator: FunctionComponent = () => {
     const { translations } = useTranslations();
 
     return (
-        <Stack.Navigator initialRouteName={settingsNavKey}>
+        <Stack.Navigator
+            initialRouteName={settingsNavKey}
+            screenOptions={{
+                headerBackTitle: translations.stackHeaderBackTitle,
+            }}
+        >
             <Stack.Screen
                 options={{
                     title: translations.settingsTitle,
@@ -27,7 +32,13 @@ const SettingsScreenStackNavigator: FunctionComponent = () => {
                 name={settingsNavKey}
                 component={SettingsScreen}
             />
-            <Stack.Screen name={gameSettingsNavKey} component={GameSettingsScreen} />
+            <Stack.Screen
+                options={{
+                    title: translations.gameSettingsTitle,
+                }}
+                name={gameSettingsNavKey}
+                component={GameSettingsScreen}
+            />
         </Stack.Navigator>
     );
 };
