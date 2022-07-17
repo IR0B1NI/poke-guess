@@ -1,7 +1,9 @@
+import { StoreProvider } from 'easy-peasy';
 import React, { FunctionComponent } from 'react';
 
 import LocalizationProvider from './helper/localization';
 import Router from './navigation/router';
+import store from './store';
 
 /**
  * Entry point of the mobile application.
@@ -10,9 +12,12 @@ import Router from './navigation/router';
  */
 const App: FunctionComponent = () => {
     return (
-        <LocalizationProvider>
-            <Router />
-        </LocalizationProvider>
+        /* @ts-expect-error: Ignore no children prop error. */
+        <StoreProvider store={store}>
+            <LocalizationProvider>
+                <Router />
+            </LocalizationProvider>
+        </StoreProvider>
     );
 };
 
