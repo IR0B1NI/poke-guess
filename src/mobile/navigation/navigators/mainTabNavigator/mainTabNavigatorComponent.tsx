@@ -11,14 +11,14 @@ import colors from '../../../theme/colors';
 import { gameNavKey } from '../../router';
 import { settingsNavKey } from '../../router/constants';
 import MainScreen from '../../screens/mainScreen';
-import SettingsScreen from '../../screens/settingsScreen';
+import SettingsScreenStackNavigator from '../settingsScreenStackNavigator';
 
 // Create the main tab navigator.
 const Tab = createBottomTabNavigator();
 
 /**
  * The applications main tab navigator.
- * 
+ *
  * @returns {FunctionComponent} The tab navigator component.
  */
 const MainTabNavigator: FunctionComponent = () => {
@@ -58,7 +58,7 @@ const MainTabNavigator: FunctionComponent = () => {
             />
             <Tab.Screen
                 name={settingsNavKey}
-                component={SettingsScreen}
+                component={SettingsScreenStackNavigator}
                 options={{
                     title: translations.settingsTitle,
                     tabBarIcon: (props) => renderTabBarIcon(props.focused, 'settings', IconNameSpace.MaterialIcons),
