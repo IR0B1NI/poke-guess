@@ -7,6 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import IconNameSpace from '../../../enumerations/IconNameSpace';
 import { useTranslations } from '../../../helper/localization';
+import { useStoreState } from '../../../store';
 import colors from '../../../theme/colors';
 import { gameNavKey, settingsStackNavKey } from '../../router';
 import MainScreen from '../../screens/mainScreen';
@@ -25,6 +26,9 @@ const MainTabNavigator: FunctionComponent = () => {
     const isDarkMode = useColorScheme() === 'dark';
     /** Access to the translations. */
     const { translations } = useTranslations();
+
+    /** Whether the bottom nav bar is hidden or not. */
+    const isBottomNavBarHidden = useStoreState((state) => state.ApplicationModel.isBottomNavBarHidden);
 
     /**
      * Render an icon for a tab bar item.
@@ -46,7 +50,7 @@ const MainTabNavigator: FunctionComponent = () => {
     };
 
     return (
-        <Tab.Navigator initialRouteName={gameNavKey}>
+        <Tab.Navigator initialRouteName={gameNavKey} screenOptions={{ tabBarStyle: { display: isBottomNavBarHidden ? 'none' : 'flex' } }}>
             <Tab.Screen
                 name={gameNavKey}
                 component={MainScreen}
