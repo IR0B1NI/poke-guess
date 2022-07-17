@@ -8,8 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import IconNameSpace from '../../../enumerations/IconNameSpace';
 import { useTranslations } from '../../../helper/localization';
 import colors from '../../../theme/colors';
-import { gameNavKey } from '../../router';
-import { settingsNavKey } from '../../router/constants';
+import { gameNavKey, settingsStackNavKey } from '../../router';
 import MainScreen from '../../screens/mainScreen';
 import SettingsScreenStackNavigator from '../settingsScreenStackNavigator';
 
@@ -57,9 +56,10 @@ const MainTabNavigator: FunctionComponent = () => {
                 }}
             />
             <Tab.Screen
-                name={settingsNavKey}
+                name={settingsStackNavKey}
                 component={SettingsScreenStackNavigator}
                 options={{
+                    headerShown: false,
                     title: translations.settingsTitle,
                     tabBarIcon: (props) => renderTabBarIcon(props.focused, 'settings', IconNameSpace.MaterialIcons),
                 }}

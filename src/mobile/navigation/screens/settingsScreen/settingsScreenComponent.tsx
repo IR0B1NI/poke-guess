@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { FunctionComponent } from 'react';
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
 import { useTranslations } from '../../../helper/localization';
+import { gameSettingsNavKey } from '../../router';
 
 /**
  * Screen component to render the settings screen.
@@ -12,7 +14,13 @@ const SettingsScreen: FunctionComponent = () => {
     /** Access to the translations. */
     const { translations } = useTranslations();
 
-    return <View></View>;
+    const navigation = useNavigation<any>();
+
+    return (
+        <View>
+            <Button title="test" onPress={() => navigation.navigate(gameSettingsNavKey)} />
+        </View>
+    );
 };
 
 export default SettingsScreen;
