@@ -1,4 +1,4 @@
-[← Back](../../readme.md)
+[← Back](https://github.com/IR0B1NI/poke-guess)
 
 # poke-guess-web
 

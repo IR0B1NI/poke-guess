@@ -3,7 +3,7 @@
     "compilerOptions": {
         "target": "es5",
         "outDir": "lib",
-        "lib": ["esnext"],
+        "lib": ["esnext", "es5"],
         "allowJs": true,
         "declaration": true,
         "declarationMap": true,
