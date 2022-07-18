@@ -1,6 +1,6 @@
 [← Back](../../readme.md)
 
-# poke-guess-common
+# poke-guess-shared
 
 ## 🗒 About
 
@@ -17,7 +17,7 @@ git clone https://github.com/IR0B1NI/poke-guess.git
 2. Change working directory
 
 ```shell
-cd poke-guess/src/common
+cd poke-guess/src/shared
 ```
 
 3. Build the package

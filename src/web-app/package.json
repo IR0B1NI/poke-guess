@@ -7,7 +7,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "yarn && yarn build-shared && next build",
-        "build-shared": "yarn --cwd ../common run build",
+        "build-shared": "yarn --cwd ../shared run build",
         "start": "next start",
         "lint": "eslint ."
     },
@@ -25,7 +25,7 @@
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
         "sharp": "^0.30.6",
-        "poke-guess-common": "link:../common"
+        "poke-guess-shared": "link:../shared"
     },
     "devDependencies": {
         "@types/node": "^17.0.42",
