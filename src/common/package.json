@@ -1,11 +1,12 @@
 {
-    "name": "poke-guess-shared",
+    "name": "poke-guess-common",
     "version": "1.0.0",
     "description": "The shared code between the Poke-Guess UI projects.",
     "private": false,
     "license": "MIT",
     "main": "lib/index.js",
     "types": "lib",
+    "files": ["lib/**"],
     "scripts": {
         "build": "yarn && tsc --project .",
         "lint": "eslint ."

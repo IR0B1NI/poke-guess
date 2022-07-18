@@ -1,4 +1,4 @@
-import { AlertType } from 'poke-guess-shared';
+import { AlertType } from 'poke-guess-common';
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 
 export interface IAutoDismissAlertProps {

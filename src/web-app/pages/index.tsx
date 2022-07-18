@@ -16,7 +16,7 @@ import {
     saveGameState,
     saveStoreKey,
     storeJson,
-} from 'poke-guess-shared';
+} from 'poke-guess-common';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import AutoDismissAlert from '../components/alerts/autoDismissAlert';

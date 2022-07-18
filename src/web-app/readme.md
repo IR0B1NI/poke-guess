@@ -26,7 +26,7 @@ cd poke-guess/src/web-app
 yarn build
 ```
 
-Note that this is also building the [poke-guess-shared](../shared/readme.md) package.
+Note that this is also building the [poke-guess-common](../common/readme.md) package.
 
 ## 👩‍💻 Developing
 
