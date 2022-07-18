@@ -1,6 +1,6 @@
 {
     "name": "poke-guess-common",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "The shared code between the Poke-Guess UI projects.",
     "private": false,
     "license": "MIT",
