@@ -1,9 +1,10 @@
 {
     "name": "poke-guess-shared",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "The shared code between the Poke-Guess UI projects.",
     "private": false,
     "license": "MIT",
+    "main": "lib/index.js",
     "module": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
