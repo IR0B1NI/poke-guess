@@ -3272,10 +3272,10 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
-poke-guess-shared@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/poke-guess-shared/-/poke-guess-shared-0.0.2.tgz#a9b731c0208e8fd1940631e033c143065ecf8d76"
-  integrity sha512-mcXbAv3YyQH/xP4r8sKMqQeGu5RD6BU/orpEWMBtOrSeEujgr+w7zU0+CLKnBUmnDAgXKclg5qr6R/8/QQ1k3A==
+poke-guess-shared@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/poke-guess-shared/-/poke-guess-shared-0.0.4.tgz#375a8e857569f98c0c075b8a94fd6324f04dcf39"
+  integrity sha512-3cEyaU3jwCeM1lsi/YCjpDJySSd1YbhEEHlW6XdKaGXDDXFVscixUZLU6xSeFl8Jc9AwNT2Uzbexb09sQZvPYw==
   dependencies:
     eslint-plugin-jsdoc "^39.3.2"
     pokedex-promise-v2 "^4.0.0"
