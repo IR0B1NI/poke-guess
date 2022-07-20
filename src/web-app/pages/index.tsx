@@ -77,8 +77,8 @@ const Home: NextPage = () => {
      *
      * @returns {IPokemonApiCache | undefined} The cached poke api data if any exists.
      */
-    const getPokeApiDataFromCache = useCallback((): IPokemonApiCache | undefined => {
-        return getFromStorage<IPokemonApiCache>(pokeApiDataCacheKey, getStorageItem);
+    const getPokeApiDataFromCache = useCallback(async (): Promise<IPokemonApiCache | undefined> => {
+        return await getFromStorage<IPokemonApiCache>(pokeApiDataCacheKey, getStorageItem);
     }, []);
 
     /**
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
     const fetchPokemon = useCallback(
         async (genName: string, languageKey: string): Promise<IPokemon[]> => {
             // Retrieve the poke api data from cache.
-            const cache = getPokeApiDataFromCache();
+            const cache = await getPokeApiDataFromCache();
             // Check if the cache contains the needed data for the requested generation name.
             const cachedGeneration = cache?.generations.find((g) => g.name === genName);
             if (cachedGeneration && cachedGeneration.pokemon[languageKey] && cachedGeneration.pokemon[languageKey].length > 0) {
@@ -140,14 +140,21 @@ const Home: NextPage = () => {
 
     /** Handle game initialization based on stored save. */
     useEffect(() => {
-        const save = getFromStorage<IPokemonGameSave>(saveStoreKey, getStorageItem);
-        if (!save) {
-            setSelectedGenerationNames([]);
-            setFoundPokemon([]);
-            return;
-        }
-        setSelectedGenerationNames(save.generationNames);
-        setFoundPokemon(save.foundPokemonNames);
+        const fetchData = async () => {
+            try {
+                const save = await getFromStorage<IPokemonGameSave>(saveStoreKey, getStorageItem);
+                if (!save) {
+                    setSelectedGenerationNames([]);
+                    setFoundPokemon([]);
+                    return;
+                }
+                setSelectedGenerationNames(save.generationNames);
+                setFoundPokemon(save.foundPokemonNames);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
     }, []);
 
     /** Fetch available generations */

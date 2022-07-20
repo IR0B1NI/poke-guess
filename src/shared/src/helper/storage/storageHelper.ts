@@ -8,11 +8,11 @@ import { IPokemonGameSave, saveStoreKey } from '../..';
  * @param {T} item The item to store.
  * @param {Function} setItem The platform specific function to store an item on the platform storage.
  */
-const storeJson = <T>(storageKey: string, item: T, setItem: (key: string, stringifiedItem: string) => void): void => {
+const storeJson = async <T>(storageKey: string, item: T, setItem: (key: string, stringifiedItem: string) => void | Promise<void>): Promise<void> => {
     // Stringify the given item.
     const stringifiedItem = JSON.stringify(item);
     // Store the stringified item on the platform specific storage using the given storage key.
-    setItem(storageKey, stringifiedItem);
+    await setItem(storageKey, stringifiedItem);
 };
 
 /**
@@ -23,9 +23,9 @@ const storeJson = <T>(storageKey: string, item: T, setItem: (key: string, string
  * @param {Function} getItem The platform specific function to retrieve an item from the platform storage.
  * @returns {T | undefined} The retrieved item parsed to the desired type if existent, undefined if not.
  */
-const getFromStorage = <T>(storageKey: string, getItem: (key: string) => string | null): T | undefined => {
+const getFromStorage = async <T>(storageKey: string, getItem: (key: string) => string | null | Promise<string | null>): Promise<T | undefined> => {
     // Get the item from platform storage using the given storage key.
-    const item = getItem(storageKey);
+    const item = await getItem(storageKey);
     if (!item) {
         // If no item is stored with this key, return undefined.
         return undefined;
@@ -43,12 +43,12 @@ const getFromStorage = <T>(storageKey: string, getItem: (key: string) => string 
  * @param {string[]} foundPokemonNames The names of the successfully guessed pokemon.
  * @param {Function} setItem The platform specific function to store an item on the platform storage.
  */
-const saveGameState = (generationNames: string[], foundPokemonNames: string[], setItem: (key: string, stringifiedItem: string) => void) => {
+const saveGameState = async (generationNames: string[], foundPokemonNames: string[], setItem: (key: string, stringifiedItem: string) => void | Promise<void>) => {
     const save: IPokemonGameSave = {
         generationNames: generationNames,
         foundPokemonNames: foundPokemonNames,
     };
-    storeJson(saveStoreKey, save, setItem);
+    await storeJson(saveStoreKey, save, setItem);
 };
 
 export { getFromStorage, saveGameState, storeJson };
