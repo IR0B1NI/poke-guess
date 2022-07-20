@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchPokemonGenerations, getFromStorage, IPokemon, IPokemonGameSave, IPokemonGeneration, saveGameState, saveStoreKey } from 'poke-guess-shared';
+import { fetchPokemonGenerations, IPokemon, IPokemonGeneration, saveGameState } from 'poke-guess-shared';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Switch, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import CustomText from '../../../components/customText';
 import ListOption from '../../../components/listOption';
-import { useStoreActions } from '../../../store';
+import { useStoreActions, useStoreState } from '../../../store';
 
 /**
  * Screen component to render the game settings screen.
@@ -14,24 +14,15 @@ import { useStoreActions } from '../../../store';
  * @returns {FunctionComponent} The game settings screen.
  */
 const GameSettingsScreen: FunctionComponent = () => {
+    /** The game save model. */
+    const gameSave = useStoreState((state) => state.ApplicationModel.gameSave);
+    /** Action to update the game save model. */
+    const updateGameSave = useStoreActions((actions) => actions.ApplicationModel.updateGameSave);
     /** Action to update Whether the bottom nav bar is hidden or not. */
     const updateIsBottomNavBarHidden = useStoreActions((actions) => actions.ApplicationModel.updateIsBottomNavBarHidden);
 
     /** The state of available pokemon generations. */
     const [generations, setGenerations] = useState<Map<string, IPokemon[]>>();
-    /** The selected pokemon generation. */
-    const [selectedGenerationNames, setSelectedGenerationNames] = useState<string[]>([]);
-
-    /** Initially get the selected generations from device storage. */
-    useEffect(() => {
-        const fetchData = async () => {
-            const save = await getFromStorage<IPokemonGameSave>(saveStoreKey, AsyncStorage.getItem);
-            if (save?.generationNames) {
-                setSelectedGenerationNames(save.generationNames);
-            }
-        };
-        fetchData();
-    }, []);
 
     /** Hide the bottom nav bar on appearing and show it again when the component unmounts. */
     useEffect(() => {
@@ -62,20 +53,23 @@ const GameSettingsScreen: FunctionComponent = () => {
      * @param {string} generationName The name of the generation to handle.
      */
     const toggleGenerationSelection = async (generationName: string) => {
-        const newState = [...selectedGenerationNames];
-        if (selectedGenerationNames.includes(generationName)) {
+        const tmpGameSave = { ...gameSave };
+        if (gameSave.generationNames.includes(generationName)) {
             // Remove the generation from the list of selected generations.
-            const index = selectedGenerationNames.findIndex((v) => v === generationName);
+            const index = gameSave.generationNames.findIndex((v) => v === generationName);
             if (index !== -1) {
+                const newState = [...gameSave.generationNames];
                 newState.splice(index, 1);
-                setSelectedGenerationNames([...newState]);
+                tmpGameSave.generationNames = newState;
             }
         } else {
+            const newState = [...gameSave.generationNames];
             // Add the generation to the list of selected generations.
             newState.push(generationName);
-            setSelectedGenerationNames([...newState]);
+            tmpGameSave.generationNames = newState;
         }
-        await saveGameState([...newState], [], AsyncStorage.setItem);
+        updateGameSave({ ...tmpGameSave });
+        await saveGameState(tmpGameSave.generationNames, tmpGameSave.foundPokemonNames, AsyncStorage.setItem);
     };
 
     return (
@@ -87,7 +81,7 @@ const GameSettingsScreen: FunctionComponent = () => {
                     renderItem={({ item, index }) => (
                         <ListOption renderBorder key={`generation-${index}`} onPress={() => toggleGenerationSelection(item)}>
                             <CustomText>{item}</CustomText>
-                            <Switch value={selectedGenerationNames.includes(item)} onChange={() => toggleGenerationSelection(item)} />
+                            <Switch value={gameSave?.generationNames.includes(item)} onChange={() => toggleGenerationSelection(item)} />
                         </ListOption>
                     )}
                 />

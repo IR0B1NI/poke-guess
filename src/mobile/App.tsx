@@ -1,6 +1,7 @@
 import { StoreProvider } from 'easy-peasy';
 import React, { FunctionComponent } from 'react';
 
+import StoreInitializer from './components/storeInitializer';
 import LocalizationProvider from './helper/localization';
 import Router from './navigation/router';
 import store from './store';
@@ -14,9 +15,11 @@ const App: FunctionComponent = () => {
     return (
         /* @ts-expect-error: Ignore no children prop error. */
         <StoreProvider store={store}>
-            <LocalizationProvider>
-                <Router />
-            </LocalizationProvider>
+            <StoreInitializer>
+                <LocalizationProvider>
+                    <Router />
+                </LocalizationProvider>
+            </StoreInitializer>
         </StoreProvider>
     );
 };
