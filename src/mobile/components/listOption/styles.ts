@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-/** Styles of the game menu. */
+import colors from '../../theme/colors';
+
+/** Styles for the list option. */
 const styles = StyleSheet.create({
-    optionOuterContainer: {        
+    optionOuterContainer: {
         paddingTop: 12,
         paddingBottom: 12,
         marginLeft: 12,
@@ -14,10 +16,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingLeft: 6,
-        paddingRight: 6
+        paddingRight: 6,
     },
-    optionBorderTop: {
-        borderTopWidth: 0.3,
+    border: {
+        borderTopWidth: 0.2,
+    },
+    borderDark: {
+        borderColor: colors.white,
+    },
+    borderLight: {
+        borderColor: colors.black,
     },
 });
 

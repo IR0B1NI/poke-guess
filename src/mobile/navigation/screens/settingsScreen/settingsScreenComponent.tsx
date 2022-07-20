@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FunctionComponent } from 'react';
-import { TouchableOpacity, useColorScheme, View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import CustomText from '../../../components/customText';
+import ListOption from '../../../components/listOption';
 import { useTranslations } from '../../../helper/localization';
 import { gameSettingsNavKey } from '../../router';
 import styles from './styles';
@@ -26,12 +27,10 @@ const SettingsScreen: FunctionComponent = () => {
     return (
         <View>
             {settingsKeys.map((key) => (
-                <TouchableOpacity key={key} onPress={() => navigation.navigate(gameSettingsNavKey)}>
-                    <View style={styles.linkContainer}>
-                        <CustomText>{key}</CustomText>
-                        <Icon size={22} name="chevron-right" style={isDarkMode ? styles.linkIconDark : styles.linkIconLight} />
-                    </View>
-                </TouchableOpacity>
+                <ListOption key={key} renderBorder onPress={() => navigation.navigate(gameSettingsNavKey)}>
+                    <CustomText>{key}</CustomText>
+                    <Icon size={22} name="chevron-right" style={isDarkMode ? styles.iconDark : styles.iconLight} />
+                </ListOption>
             ))}
         </View>
     );

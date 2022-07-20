@@ -1,12 +1,12 @@
 import { fetchPokemonGenerations, IPokemon, IPokemonGeneration } from 'poke-guess-shared';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Switch, TouchableOpacity, View } from 'react-native';
+import { Switch, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import CustomText from '../../../components/customText';
+import ListOption from '../../../components/listOption';
 import { useTranslations } from '../../../helper/localization';
 import { useStoreActions } from '../../../store';
-import styles from './styles';
 
 /**
  * Screen component to render the game settings screen.
@@ -77,12 +77,10 @@ const GameSettingsScreen: FunctionComponent = () => {
                     scrollEnabled={false}
                     data={Array.from(generations.keys())}
                     renderItem={({ item, index }) => (
-                        <View key={`generation-${index}`} style={[styles.optionOuterContainer, index !== 0 && styles.optionBorderTop]}>
-                            <View style={styles.optionInnerContainer}>
-                                <CustomText>{item}</CustomText>
-                                <Switch value={selectedGenerationNames.includes(item)} onChange={() => toggleGenerationSelection(item)} />
-                            </View>
-                        </View>
+                        <ListOption renderBorder key={`generation-${index}`} onPress={() => toggleGenerationSelection(item)}>
+                            <CustomText>{item}</CustomText>
+                            <Switch value={selectedGenerationNames.includes(item)} onChange={() => toggleGenerationSelection(item)} />
+                        </ListOption>
                     )}
                 />
             )}
