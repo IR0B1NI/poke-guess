@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchPokemonGenerations, getFromStorage, IPokemon, IPokemonGameSave, IPokemonGeneration, saveGameState, saveStoreKey } from 'poke-guess-shared';
+import { fetchPokemonGenerations, IPokemon, IPokemonGeneration } from 'poke-guess-shared';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Switch, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -25,11 +24,6 @@ const GameSettingsScreen: FunctionComponent = () => {
     const [generations, setGenerations] = useState<Map<string, IPokemon[]>>();
     /** The selected pokemon generation. */
     const [selectedGenerationNames, setSelectedGenerationNames] = useState<string[]>([]);
-
-    useEffect(() => {
-        // const save = getFromStorage<IPokemonGameSave>(saveStoreKey, AsyncStorage.getItem);
-        // console.log(save);
-    }, []);
 
     /** Hide the bottom nav bar on appearing and show it again when the component unmounts. */
     useEffect(() => {
@@ -73,7 +67,6 @@ const GameSettingsScreen: FunctionComponent = () => {
             const newState = [...selectedGenerationNames];
             newState.push(generationName);
             setSelectedGenerationNames([...newState]);
-            saveGameState(selectedGenerationNames, [], AsyncStorage.setItem);
         }
     };
 
