@@ -1,11 +1,11 @@
-import { fetchPokemonGenerations, IPokemon, IPokemonGeneration } from 'poke-guess-shared';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchPokemonGenerations, getFromStorage, IPokemon, IPokemonGameSave, IPokemonGeneration, saveGameState, saveStoreKey } from 'poke-guess-shared';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Switch, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import CustomText from '../../../components/customText';
 import ListOption from '../../../components/listOption';
-import { useTranslations } from '../../../helper/localization';
 import { useStoreActions } from '../../../store';
 
 /**
@@ -14,9 +14,6 @@ import { useStoreActions } from '../../../store';
  * @returns {FunctionComponent} The game settings screen.
  */
 const GameSettingsScreen: FunctionComponent = () => {
-    /** Access to the translations. */
-    const { translations } = useTranslations();
-
     /** Action to update Whether the bottom nav bar is hidden or not. */
     const updateIsBottomNavBarHidden = useStoreActions((actions) => actions.ApplicationModel.updateIsBottomNavBarHidden);
 
@@ -24,6 +21,17 @@ const GameSettingsScreen: FunctionComponent = () => {
     const [generations, setGenerations] = useState<Map<string, IPokemon[]>>();
     /** The selected pokemon generation. */
     const [selectedGenerationNames, setSelectedGenerationNames] = useState<string[]>([]);
+
+    /** Initially get the selected generations from device storage. */
+    useEffect(() => {
+        const fetchData = async () => {
+            const save = await getFromStorage<IPokemonGameSave>(saveStoreKey, AsyncStorage.getItem);
+            if (save?.generationNames) {
+                setSelectedGenerationNames(save.generationNames);
+            }
+        };
+        fetchData();
+    }, []);
 
     /** Hide the bottom nav bar on appearing and show it again when the component unmounts. */
     useEffect(() => {
@@ -53,21 +61,21 @@ const GameSettingsScreen: FunctionComponent = () => {
      *
      * @param {string} generationName The name of the generation to handle.
      */
-    const toggleGenerationSelection = (generationName: string) => {
+    const toggleGenerationSelection = async (generationName: string) => {
+        const newState = [...selectedGenerationNames];
         if (selectedGenerationNames.includes(generationName)) {
             // Remove the generation from the list of selected generations.
             const index = selectedGenerationNames.findIndex((v) => v === generationName);
             if (index !== -1) {
-                const newState = [...selectedGenerationNames];
                 newState.splice(index, 1);
                 setSelectedGenerationNames([...newState]);
             }
         } else {
             // Add the generation to the list of selected generations.
-            const newState = [...selectedGenerationNames];
             newState.push(generationName);
             setSelectedGenerationNames([...newState]);
         }
+        await saveGameState([...newState], [], AsyncStorage.setItem);
     };
 
     return (
