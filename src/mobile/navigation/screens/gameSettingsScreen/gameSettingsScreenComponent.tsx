@@ -63,8 +63,8 @@ const GameSettingsScreen: FunctionComponent = () => {
                 tmpGameSave.generationNames = newState;
             }
         } else {
-            const newState = [...gameSave.generationNames];
             // Add the generation to the list of selected generations.
+            const newState = [...gameSave.generationNames];
             newState.push(generationName);
             tmpGameSave.generationNames = newState;
         }

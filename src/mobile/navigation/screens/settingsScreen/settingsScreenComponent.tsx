@@ -7,6 +7,7 @@ import CustomText from '../../../components/customText';
 import ListOption from '../../../components/listOption';
 import { useTranslations } from '../../../helper/localization';
 import { gameSettingsNavKey } from '../../router';
+import { languageSettingsNavKey } from '../../router/constants';
 import styles from './styles';
 
 /**
@@ -15,20 +16,23 @@ import styles from './styles';
  * @returns {FunctionComponent} The settings screen.
  */
 const SettingsScreen: FunctionComponent = () => {
+    /** Access to translations. */
+    const { translations } = useTranslations();
     /** Whether the dark mode is enabled or not. */
     const isDarkMode = useColorScheme() === 'dark';
-    /** Access to the translations. */
-    const { translations } = useTranslations();
     /** Access to the navigation. */
     const navigation = useNavigation<{ navigate: (key: string) => void }>();
 
-    const settingsKeys = ['Game-Settings', 'Language Settings'];
+    const settingsItems = [
+        { key: gameSettingsNavKey, label: translations.gameSettingsTitle },
+        { key: languageSettingsNavKey, label: translations.languageSettingsTitle },
+    ];
 
     return (
         <View>
-            {settingsKeys.map((key) => (
-                <ListOption key={key} renderBorder onPress={() => navigation.navigate(gameSettingsNavKey)}>
-                    <CustomText>{key}</CustomText>
+            {settingsItems.map((item) => (
+                <ListOption key={item.key} renderBorder onPress={() => navigation.navigate(item.key)}>
+                    <CustomText>{item.label}</CustomText>
                     <Icon size={22} name="chevron-right" style={isDarkMode ? styles.iconDark : styles.iconLight} />
                 </ListOption>
             ))}

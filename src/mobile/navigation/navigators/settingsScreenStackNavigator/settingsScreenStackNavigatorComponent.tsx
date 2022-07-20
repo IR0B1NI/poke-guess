@@ -2,8 +2,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { FunctionComponent } from 'react';
 
 import { useTranslations } from '../../../helper/localization';
-import { gameSettingsNavKey, settingsNavKey } from '../../router/constants';
+import { gameSettingsNavKey, languageSettingsNavKey, settingsNavKey } from '../../router/constants';
 import GameSettingsScreen from '../../screens/gameSettingsScreen';
+import LanguageSettingsScreen from '../../screens/languageSettingsScreen';
 import SettingsScreen from '../../screens/settingsScreen/settingsScreenComponent';
 
 // Create the stack navigator for the settings screen.
@@ -38,6 +39,13 @@ const SettingsScreenStackNavigator: FunctionComponent = () => {
                 }}
                 name={gameSettingsNavKey}
                 component={GameSettingsScreen}
+            />
+            <Stack.Screen
+                options={{
+                    title: translations.languageSettingsTitle,
+                }}
+                name={languageSettingsNavKey}
+                component={LanguageSettingsScreen}
             />
         </Stack.Navigator>
     );

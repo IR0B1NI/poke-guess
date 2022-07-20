@@ -6,6 +6,7 @@ interface ITranslations {
     gameTitle: string;
     settingsTitle: string;
     gameSettingsTitle: string;
+    languageSettingsTitle: string;
     welcomeMessage: string;
 }
 
@@ -16,6 +17,7 @@ const translations = new LocalizedStrings<ITranslations>({
         gameTitle: 'Poke Guess',
         settingsTitle: 'Settings',
         gameSettingsTitle: 'Game settings',
+        languageSettingsTitle: 'Language settings',
         welcomeMessage: 'Hello World',
     },
     de: {
@@ -23,6 +25,7 @@ const translations = new LocalizedStrings<ITranslations>({
         gameTitle: 'Poke Guess',
         settingsTitle: 'Einstellungen',
         gameSettingsTitle: 'Spieleinstellungen',
+        languageSettingsTitle: 'Spracheinstellungen',
         welcomeMessage: 'Hallo Welt',
     },
 });
