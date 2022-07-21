@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 
 import CustomText from '../../../components/customText';
 import { useTranslations } from '../../../helper/localization';
@@ -11,21 +11,11 @@ import { useTranslations } from '../../../helper/localization';
  */
 const MainScreen: FunctionComponent = () => {
     /** Access to the translations. */
-    const { translations, changeLanguage } = useTranslations();
+    const { translations } = useTranslations();
 
     return (
         <View>
             <CustomText>{translations.welcomeMessage}</CustomText>
-            <Button
-                title="Toggle"
-                onPress={() => {
-                    if (translations.getLanguage() === 'en') {
-                        changeLanguage('de');
-                    } else {
-                        changeLanguage('en');
-                    }
-                }}
-            />
         </View>
     );
 };

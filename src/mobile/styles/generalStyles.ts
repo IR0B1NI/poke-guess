@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import colors from '../../../theme/colors';
+import colors from '../theme/colors';
 
-/** The settings screen styles. */
-const styles = StyleSheet.create({
+/** The general styles. */
+const generalStyles = StyleSheet.create({
     iconDark: {
         color: colors.white,
     },
@@ -12,4 +12,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default styles;
+export default generalStyles;

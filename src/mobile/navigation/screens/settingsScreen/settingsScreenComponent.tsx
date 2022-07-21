@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomText from '../../../components/customText';
 import ListOption from '../../../components/listOption';
 import { useTranslations } from '../../../helper/localization';
+import generalStyles from '../../../styles/generalStyles';
 import { gameSettingsNavKey } from '../../router';
 import { languageSettingsNavKey } from '../../router/constants';
-import styles from './styles';
 
 /**
  * Screen component to render the settings screen.
@@ -33,7 +33,7 @@ const SettingsScreen: FunctionComponent = () => {
             {settingsItems.map((item) => (
                 <ListOption key={item.key} renderBorder onPress={() => navigation.navigate(item.key)}>
                     <CustomText>{item.label}</CustomText>
-                    <Icon size={22} name="chevron-right" style={isDarkMode ? styles.iconDark : styles.iconLight} />
+                    <Icon size={22} name="chevron-right" style={isDarkMode ? generalStyles.iconDark : generalStyles.iconLight} />
                 </ListOption>
             ))}
         </View>
