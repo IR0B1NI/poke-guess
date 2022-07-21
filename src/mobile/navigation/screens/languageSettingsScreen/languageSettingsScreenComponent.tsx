@@ -27,7 +27,7 @@ const LanguageSettingsScreen: FunctionComponent = () => {
                 scrollEnabled={false}
                 data={availableLanguages}
                 renderItem={({ item, index }) => (
-                    <ListOption renderBorder key={`generation-${index}`} onPress={() => changeLanguage(item)}>
+                    <ListOption renderBorder key={`generation-${index}`} onPress={async () => await changeLanguage(item)}>
                         <LanguageLabel languageKey={item} />
                         {item === translations.getLanguage() && <Icon name="check" size={15} style={isDarkMode ? generalStyles.iconDark : generalStyles.iconLight} />}
                     </ListOption>
