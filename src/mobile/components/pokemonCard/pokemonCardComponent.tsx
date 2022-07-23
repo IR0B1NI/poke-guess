@@ -1,8 +1,9 @@
 import { IPokemon } from 'poke-guess-shared';
 import React, { FunctionComponent } from 'react';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 import CustomText from '../customText';
+import styles from './styles';
 
 export interface IPokemonCardProps {
     /** The pokemon to display. */
@@ -18,8 +19,11 @@ export interface IPokemonCardProps {
  * @returns {FunctionComponent} The pokemon card component.
  */
 const PokemonCard: FunctionComponent<IPokemonCardProps> = (props) => {
+    /** Whether the dark mode is enabled or not. */
+    const isDarkMode = useColorScheme() === 'dark';
+
     return (
-        <View>
+        <View style={[styles.container, isDarkMode ? styles.containerDark : styles.containerLight]}>
             <CustomText>{props.pokemon.name && !props.hide ? props.pokemon.name : '?????'}</CustomText>
         </View>
     );
