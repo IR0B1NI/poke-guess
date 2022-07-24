@@ -58,7 +58,7 @@ const MainScreen: FunctionComponent = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [language]);
 
     /** Fetch the pokemon to guess based on the selected generations and the selected language. */
     useEffect(() => {

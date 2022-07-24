@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFromStorage, storeJson } from 'poke-guess-shared';
-import React, { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect } from 'react';
 
 import { useStoreActions, useStoreState } from '../../store';
 import translations from './translations';
