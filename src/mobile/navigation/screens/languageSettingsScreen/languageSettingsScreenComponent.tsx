@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { FlatList, useColorScheme, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import LanguageLabel from '../../../components/languageLabel/languageLabel';
 import ListOption from '../../../components/listOption';
 import { useTranslations } from '../../../helper/localization';
+import { useStoreActions } from '../../../store';
 import generalStyles from '../../../styles/generalStyles';
 
 /**
@@ -20,6 +21,15 @@ const LanguageSettingsScreen: FunctionComponent = () => {
 
     /** The list of available language keys. */
     const availableLanguages = translations.getAvailableLanguages();
+
+    /** Action to update Whether the bottom nav bar is hidden or not. */
+    const updateIsBottomNavBarHidden = useStoreActions((actions) => actions.ApplicationModel.updateIsBottomNavBarHidden);
+
+    /** Hide the bottom nav bar on appearing and show it again when the component unmounts. */
+    useEffect(() => {
+        updateIsBottomNavBarHidden(true);
+        return () => updateIsBottomNavBarHidden(false);
+    }, [updateIsBottomNavBarHidden]);
 
     return (
         <View>
