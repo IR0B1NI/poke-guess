@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFromStorage, storeJson } from 'poke-guess-shared';
 import React, { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
+import { useStoreActions, useStoreState } from '../../store';
 import translations from './translations';
 
 // Create context to provide the translations.
@@ -21,10 +22,10 @@ interface ILocalizationProviderProps {
  * @returns {FunctionComponent} The localization provider component.
  */
 const LocalizationProvider: FunctionComponent<ILocalizationProviderProps> = (props) => {
-    /** Whether the localization is initialized or not. */
-    const [isInitialized, setIsInitialized] = useState<boolean>(false);
-    /** State to trigger a UI refresh after the language changed. */
-    const [refreshState, setRefreshState] = useState<boolean>(false);
+    /** The current application language. */
+    const language = useStoreState((state) => state.ApplicationModel.language);
+    /** Update the current application language. */
+    const updateLanguage = useStoreActions((actions) => actions.ApplicationModel.updateLanguage);
 
     /** The key to store and restore the users preferred UI language. */
     const languageStorageKey = 'preferred-language';
@@ -38,30 +39,29 @@ const LocalizationProvider: FunctionComponent<ILocalizationProviderProps> = (pro
         async (key: string) => {
             translations.setLanguage(key);
             await storeJson(languageStorageKey, key, AsyncStorage.setItem);
-            setRefreshState(!refreshState);
+            updateLanguage(key);
         },
-        [refreshState]
+        [updateLanguage]
     );
 
     /** Initially set the UI language based on the users preferences. */
     useEffect(() => {
-        if (isInitialized) {
+        if (language && language !== '') {
             // If the app language is already initialized, return.
             return;
         }
         const initPreferredLanguage = async () => {
-            // Ensure the initialization is not done more than once.
-            setIsInitialized(true);
             // Try to get a user preference for the language from device storage.
             const storedLanguage = await getFromStorage<string>(languageStorageKey, AsyncStorage.getItem);
             if (!storedLanguage) {
+                updateLanguage('unknown');
                 return;
             }
             // If there is a preferred language, update the UI language.
             changeLanguage(storedLanguage);
         };
         initPreferredLanguage();
-    }, [changeLanguage, isInitialized]);
+    }, [changeLanguage, language, updateLanguage]);
 
     return <LocalizationContext.Provider value={{ translations: translations, changeLanguage: changeLanguage }}>{props.children}</LocalizationContext.Provider>;
 };

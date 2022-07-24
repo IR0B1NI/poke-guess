@@ -7,13 +7,20 @@ const styles = StyleSheet.create({
     container: {
         borderRadius: 20,
         padding: 20,
-        height: 100,        
     },
     containerLight: {
         backgroundColor: colors.navBackgroundLight,
     },
     containerDark: {
         backgroundColor: colors.navBackgroundDark,
+    },
+    image: {
+        alignSelf: 'center',
+        height: 160,
+        width: 160,
+    },
+    headline: {
+        fontWeight: 'bold',
     },
 });
 

@@ -1,6 +1,6 @@
 import { IPokemon } from 'poke-guess-shared';
 import React, { FunctionComponent } from 'react';
-import { useColorScheme, View } from 'react-native';
+import { Image, useColorScheme, View } from 'react-native';
 
 import CustomText from '../customText';
 import styles from './styles';
@@ -24,7 +24,8 @@ const PokemonCard: FunctionComponent<IPokemonCardProps> = (props) => {
 
     return (
         <View style={[styles.container, isDarkMode ? styles.containerDark : styles.containerLight]}>
-            <CustomText>{props.pokemon.name && !props.hide ? props.pokemon.name : '?????'}</CustomText>
+            <CustomText style={styles.headline}>{props.pokemon.name && `${props.pokemon.id}. ${!props.hide ? props.pokemon.name : '?????'}`}</CustomText>
+            <Image style={styles.image} source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokemon.id}.png` }} />
         </View>
     );
 };

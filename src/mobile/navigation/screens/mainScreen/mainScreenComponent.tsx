@@ -1,10 +1,11 @@
 import { fetchPokemonGenerations, getPokemonForGeneration, IPokemon, IPokemonGeneration } from 'poke-guess-shared';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
 
-import CustomText from '../../../components/customText';
+import PokemonCard from '../../../components/pokemonCard';
 import { useTranslations } from '../../../helper/localization';
 import { useStoreActions, useStoreState } from '../../../store';
+import styles from './styles';
 
 /**
  * Screen component to render the main game screen.
@@ -15,6 +16,8 @@ const MainScreen: FunctionComponent = () => {
     /** Access to the translations. */
     const { translations } = useTranslations();
 
+    /** The current application language. */
+    const language = useStoreState((state) => state.ApplicationModel.language);
     /** The game save model. */
     const gameSave = useStoreState((state) => state.ApplicationModel.gameSave);
     /** Action to update the game save model. */
@@ -24,6 +27,19 @@ const MainScreen: FunctionComponent = () => {
     const [generations, setGenerations] = useState<Map<string, IPokemon[]>>();
     /** The local state of pokemon to guess. */
     const [pokemonToFind, setPokemonToFind] = useState<IPokemon[]>([]);
+
+    /**
+     * Determines whether a pokemon is contained in the user guess list or not.
+     *
+     * @param {string} name The name of the pokemon to check.
+     * @returns {boolean} True if yes, false if not.
+     */
+    const hasUserFoundPokemon = useCallback(
+        (name: string) => {
+            return gameSave.foundPokemonNames.includes(name.toLowerCase());
+        },
+        [gameSave.foundPokemonNames]
+    );
 
     /** Fetch available generations */
     useEffect(() => {
@@ -68,15 +84,22 @@ const MainScreen: FunctionComponent = () => {
             setPokemonToFind(result);
         };
         fetchData();
-    }, [gameSave.generationNames, generations, translations]);
+    }, [gameSave.generationNames, generations, translations, language]);
 
     return (
         <View>
-            {pokemonToFind.map((pokemon) => (
-                <View key={`pokemon-${pokemon.id}`}>
-                    <CustomText>{pokemon.name}</CustomText>
-                </View>
-            ))}
+            <FlatList
+                style={styles.scrollContainer}
+                data={pokemonToFind}
+                renderItem={({ item }) => {
+                    const hasFoundPokemon = hasUserFoundPokemon(item.name);
+                    return (
+                        <View style={styles.pokemonCardWrapper}>
+                            <PokemonCard pokemon={item} hide={false} />
+                        </View>
+                    );
+                }}
+            />
         </View>
     );
 };

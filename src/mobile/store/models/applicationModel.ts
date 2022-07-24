@@ -5,6 +5,10 @@ import { IPokemonGameSave } from 'poke-guess-shared';
  * Interface for the application model.
  */
 export interface IApplicationModel {
+    /** The current application language. */
+    language?: string;
+    /** Update the current application language. */
+    updateLanguage: Action<IApplicationModel, string>;
     /** Whether the bottom nav bar is hidden or not. */
     isBottomNavBarHidden: boolean;
     /** Action to update Whether the bottom nav bar is hidden or not. */
@@ -19,6 +23,10 @@ export interface IApplicationModel {
  * Initial state of the application model.
  */
 export const ApplicationModel: IApplicationModel = {
+    language: undefined,
+    updateLanguage: action((state, payload) => {
+        state.language = payload;
+    }),
     isBottomNavBarHidden: false,
     updateIsBottomNavBarHidden: action((state, payload) => {
         state.isBottomNavBarHidden = payload;

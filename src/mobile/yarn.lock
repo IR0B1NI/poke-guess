@@ -5630,10 +5630,10 @@ plist@^3.0.2:
     base64-js "^1.5.1"
     xmlbuilder "^15.1.1"
 
-poke-guess-shared@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/poke-guess-shared/-/poke-guess-shared-0.0.4.tgz#375a8e857569f98c0c075b8a94fd6324f04dcf39"
-  integrity sha512-3cEyaU3jwCeM1lsi/YCjpDJySSd1YbhEEHlW6XdKaGXDDXFVscixUZLU6xSeFl8Jc9AwNT2Uzbexb09sQZvPYw==
+poke-guess-shared@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/poke-guess-shared/-/poke-guess-shared-0.0.5.tgz#6542000fab81ba5f780b78dfc1c89911e3a44373"
+  integrity sha512-pYVbLoJCf+jQR00af6bmqnL2zdKr6o9+68W+BuvTiTBRr4vSDS/A49jO94Ofpd9jKC6Xv4iuioEXQQJ5JkOccA==
   dependencies:
     eslint-plugin-jsdoc "^39.3.2"
     pokedex-promise-v2 "^4.0.0"
