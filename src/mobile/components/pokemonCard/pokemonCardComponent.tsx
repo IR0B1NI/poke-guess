@@ -25,7 +25,7 @@ const PokemonCard: FunctionComponent<IPokemonCardProps> = (props) => {
     return (
         <View style={[styles.container, isDarkMode ? styles.containerDark : styles.containerLight]}>
             <CustomText style={styles.headline}>{props.pokemon.name && `${props.pokemon.id}. ${!props.hide ? props.pokemon.name : '?????'}`}</CustomText>
-            <Image style={styles.image} source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokemon.id}.png` }} />
+            {!props.hide && <Image style={styles.image} source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokemon.id}.png` }} />}
         </View>
     );
 };

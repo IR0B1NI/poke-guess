@@ -95,7 +95,7 @@ const MainScreen: FunctionComponent = () => {
                     const hasFoundPokemon = hasUserFoundPokemon(item.name);
                     return (
                         <View style={styles.pokemonCardWrapper}>
-                            <PokemonCard pokemon={item} hide={false} />
+                            <PokemonCard pokemon={item} hide={!hasFoundPokemon} />
                         </View>
                     );
                 }}
